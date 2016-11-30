@@ -13,7 +13,10 @@ window.load_textures = function (callback) {
      * @param callback: The function to call with the loaded textures after all textures are loaded.
      */
     var loader = new THREE.TextureLoader();
-    var texture_links = {};
+    var texture_links = {
+        'floor': '../img/marble_texture.jpg',
+        'cannon': '../img/anvil_texture.jpg'
+    };
     var textures = {};
     var loaded_textures = 0;
 

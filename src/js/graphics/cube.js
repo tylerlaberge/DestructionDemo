@@ -11,14 +11,17 @@ function Cube(width, height, depth, center, texture){
     this.width = width;
     this.height = height;
     this.depth = depth;
+    this.texture = texture;
 
     this.geometry = new THREE.BoxGeometry(this.width, this.height, this.depth);
-    this.material = new THREE.MeshPhongMaterial({color: 0xff0000, specular: 0x009900, shininess: 30, side: THREE.DoubleSide});
+    this.material = new THREE.MeshPhongMaterial({map: this.texture, side: THREE.DoubleSide});
     this.mesh = new THREE.Mesh(this.geometry, this.material);
 
     this.mesh.position.x = center[0];
     this.mesh.position.y = center[1];
     this.mesh.position.z = center[2];
+
+    this.mesh.rotateY(degrees_to_radians(10));
 }
 Cube.prototype.add_to_scene = function (scene) {
     /*
