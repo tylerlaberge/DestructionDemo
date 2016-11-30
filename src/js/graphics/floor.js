@@ -7,7 +7,7 @@ function Floor(length, width, center_vertex, texture) {
     this.texture = texture;
 
     this.geometry = new THREE.PlaneGeometry(this.width, this.length);
-    this.material = new THREE.MeshBasicMaterial({color: 0x00ff00, side: THREE.DoubleSide});
+    this.material = new THREE.MeshPhongMaterial({color: 0x00ff00, specular: 0x009900, shininess: 30, side: THREE.DoubleSide});
     this.mesh = new THREE.Mesh(this.geometry, this.material);
 
     this.init();

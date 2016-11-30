@@ -13,7 +13,7 @@ function Cube(width, height, depth, center, texture){
     this.depth = depth;
 
     this.geometry = new THREE.BoxGeometry(this.width, this.height, this.depth);
-    this.material = new THREE.MeshBasicMaterial({color: 0xff0000, side: THREE.DoubleSide});
+    this.material = new THREE.MeshPhongMaterial({color: 0xff0000, specular: 0x009900, shininess: 30, side: THREE.DoubleSide});
     this.mesh = new THREE.Mesh(this.geometry, this.material);
 
     this.mesh.position.x = center[0];
