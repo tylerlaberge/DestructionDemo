@@ -16,6 +16,10 @@ window.load_textures = function (callback) {
     var texture_links = {};
     var textures = {};
     var loaded_textures = 0;
+
+    if (Object.keys(texture_links).length == 0) {
+        callback(texture_links);
+    }
     for (var key in texture_links){
         if (texture_links.hasOwnProperty(key)){
             (function (texture_name) {

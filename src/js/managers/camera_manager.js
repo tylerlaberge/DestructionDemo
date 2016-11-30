@@ -13,4 +13,6 @@ function CameraManager(width, height, initial_position) {
     this.camera.position.x = initial_position[0];
     this.camera.position.y = initial_position[1];
     this.camera.position.z = initial_position[2];
+
+    this.camera.rotateX(degrees_to_radians(-10));
 }
