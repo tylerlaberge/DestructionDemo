@@ -20,8 +20,6 @@ function Cube(width, height, depth, center, texture){
     this.mesh.position.x = center[0];
     this.mesh.position.y = center[1];
     this.mesh.position.z = center[2];
-
-    this.mesh.rotateY(degrees_to_radians(10));
 }
 Cube.prototype.add_to_scene = function (scene) {
     /*
