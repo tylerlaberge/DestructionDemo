@@ -7,14 +7,17 @@ function Sphere(radius, center, texture){
      * @param texture: The texture to apply to the sphere (THREE.Texture)
      */
     this.radius = radius;
+    this.texture = texture;
 
     this.geometry = new THREE.SphereGeometry(this.radius, 100, 100);
-    this.material = new THREE.MeshPhongMaterial({map: texture, side: THREE.DoubleSide});
+    this.material = new THREE.MeshPhongMaterial({map: this.texture, side: THREE.DoubleSide});
     this.mesh = new THREE.Mesh(this.geometry, this.material);
 
     this.mesh.position.x = center[0];
     this.mesh.position.y = center[1];
     this.mesh.position.z = center[2];
+
+    this.mesh.rotateY(30);
 }
 Sphere.prototype.add_to_scene = function (scene) {
     /*
