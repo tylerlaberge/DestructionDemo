@@ -17,7 +17,7 @@ function Sphere(radius, center, texture){
     this.mesh.position.y = center[1];
     this.mesh.position.z = center[2];
 
-    this.mesh.rotateY(30);
+ //   this.mesh.rotateY(30);
 }
 Sphere.prototype.add_to_scene = function (scene) {
     /*
