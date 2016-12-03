@@ -7,45 +7,55 @@ function Cannon(barrel_radius, barrel_length, center_vertex, texture) {
     this.texture = texture;
 
     this.material = new THREE.MeshPhongMaterial({map: this.texture, side: THREE.DoubleSide});
+
     this.base = this.__build_base();
     this.barrel = this.__build_barrel();
 
-    this.base.add(this.barrel);
+    this.geometry = new THREE.Geometry();
 
+    this.base.updateMatrix();
+    this.barrel.updateMatrix();
+
+    this.geometry.merge(this.base.geometry, this.base.matrix);
+    this.geometry.merge(this.barrel.geometry, this.barrel.matrix);
+
+    this.mesh = new THREE.Mesh(this.geometry, this.material);
+    this.mesh.position.set(this.x, this.y, this.z);
 }
+Cannon.prototype.rotate = function (x, y, z) {
+    this.mesh.position.set(0, 0, 0);
+    this.mesh.rotateX(degrees_to_radians(x));
+    this.mesh.rotateY(degrees_to_radians(y));
+    this.mesh.rotateZ(degrees_to_radians(z));
+    this.mesh.position.set(this.x, this.y, this.z);
+};
 Cannon.prototype.__build_base = function () {
-    var base = new THREE.Object3D();
-    var connector = new THREE.Object3D();
-    var left_leg = new THREE.Object3D();
-    var right_leg = new THREE.Object3D();
+    var base_geometry = new THREE.Geometry();
 
     var right_leg_geometry = new THREE.BoxGeometry(this.barrel_radius/2, this.barrel_radius*2, this.barrel_length/2);
     var left_leg_geometry = new THREE.BoxGeometry(this.barrel_radius/2, this.barrel_radius*2, this.barrel_length/2);
     var connector_geomerty = new THREE.BoxGeometry(this.barrel_radius * 3, this.barrel_radius/5, this.barrel_length/2);
 
-    var left_leg_mesh = new THREE.Mesh(left_leg_geometry, this.material);
-    var right_leg_mesh = new THREE.Mesh(right_leg_geometry, this.material);
-    var connector_mesh = new THREE.Mesh(connector_geomerty, this.material);
+    var left_leg_mesh = new THREE.Mesh(left_leg_geometry);
+    var right_leg_mesh = new THREE.Mesh(right_leg_geometry);
+    var connector_mesh = new THREE.Mesh(connector_geomerty);
 
-    left_leg_mesh.position.set(this.x - (1.5*this.barrel_radius), this.y - this.barrel_radius, this.z);
-    right_leg_mesh.position.set(this.x + (1.5*this.barrel_radius), this.y - this.barrel_radius, this.z);
-    connector_mesh.position.set(this.x, this.y - (1.25*this.barrel_radius), this.z);
+    left_leg_mesh.position.set(-(1.5*this.barrel_radius), -this.barrel_radius, 0);
+    right_leg_mesh.position.set((1.5*this.barrel_radius), -this.barrel_radius, 0);
+    connector_mesh.position.set(0, -(1.25*this.barrel_radius), 0);
 
-    connector.add(connector_mesh);
-    left_leg.add(left_leg_mesh);
-    right_leg.add(right_leg_mesh);
+    left_leg_mesh.updateMatrix();
+    right_leg_mesh.updateMatrix();
+    connector_mesh.updateMatrix();
 
-    connector.add(left_leg);
-    connector.add(right_leg);
+    base_geometry.merge(left_leg_mesh.geometry, left_leg_mesh.matrix);
+    base_geometry.merge(right_leg_mesh.geometry, right_leg_mesh.matrix);
+    base_geometry.merge(connector_mesh.geometry, connector_mesh.matrix);
 
-    base.add(connector);
-
-    return base;
+    return new THREE.Mesh(base_geometry);
 };
 Cannon.prototype.__build_barrel = function () {
-    var barrel = new THREE.Object3D();
-    var tube = new THREE.Object3D();
-    var tube_end = new THREE.Object3D();
+    var barrel_geometry = new THREE.Geometry();
 
     var tube_geometry = new THREE.CylinderGeometry(
         this.barrel_radius, this.barrel_radius, this.barrel_length, 100, 100, true
@@ -54,21 +64,20 @@ Cannon.prototype.__build_barrel = function () {
         this.barrel_radius, 100, 100
     );
 
-    var tube_mesh = new THREE.Mesh(tube_geometry, this.material);
-    var tube_end_mesh = new THREE.Mesh(tube_end_geometry, this.material);
+    var tube_mesh = new THREE.Mesh(tube_geometry);
+    var tube_end_mesh = new THREE.Mesh(tube_end_geometry);
 
-    tube_mesh.position.set(this.x, this.y + this.barrel_length/2, this.z);
-    tube_end_mesh.position.set(this.x, this.y, this.z);
+    tube_mesh.position.set(0, this.barrel_length/2, 0);
+    tube_end_mesh.position.set(0, 0, 0);
 
-    tube.add(tube_mesh);
-    tube_end.add(tube_end_mesh);
+    tube_mesh.updateMatrix();
+    tube_end_mesh.updateMatrix();
 
-    tube.add(tube_end);
+    barrel_geometry.merge(tube_mesh.geometry, tube_mesh.matrix);
+    barrel_geometry.merge(tube_end_mesh.geometry, tube_end_mesh.matrix);
 
-    barrel.add(tube);
-
-    return barrel;
+    return new THREE.Mesh(barrel_geometry);
 };
 Cannon.prototype.add_to_scene = function (scene) {
-    scene.add(this.base);
+    scene.add(this.mesh);
 };
