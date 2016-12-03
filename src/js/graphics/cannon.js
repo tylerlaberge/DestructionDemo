@@ -1,6 +1,7 @@
-function Cannon(barrel_radius, barrel_length, center_vertex, texture) {
+function Cannon(barrel_radius, barrel_length, barrel_rotation, center_vertex, texture) {
     this.barrel_radius = barrel_radius;
     this.barrel_length = barrel_length;
+    this.barrel_rotation = barrel_rotation;
     this.x = center_vertex[0];
     this.y = center_vertex[1];
     this.z = center_vertex[2];
@@ -67,7 +68,13 @@ Cannon.prototype.__build_barrel = function () {
     var tube_mesh = new THREE.Mesh(tube_geometry);
     var tube_end_mesh = new THREE.Mesh(tube_end_geometry);
 
-    tube_mesh.position.set(0, this.barrel_length/2, 0);
+    tube_mesh.position.set(0, 0, 0);
+    tube_mesh.rotateX(degrees_to_radians(90 - this.barrel_rotation));
+
+    var y2 = Math.cos(degrees_to_radians(90 - this.barrel_rotation)) * this.barrel_length;
+    var z2 = Math.sin(degrees_to_radians(90 - this.barrel_rotation)) * this.barrel_length;
+
+    tube_mesh.position.set(0, y2/2, z2/2);
     tube_end_mesh.position.set(0, 0, 0);
 
     tube_mesh.updateMatrix();
