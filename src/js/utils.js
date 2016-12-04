@@ -15,7 +15,8 @@ window.load_textures = function (callback) {
     var loader = new THREE.TextureLoader();
     var texture_links = {
         'cannon': '../img/cannonball_texture.jpg',
-        'wood_floor': '../img/wood_floor_texture.jpg'
+        'wood_floor': '../img/wood_floor_texture.jpg',
+        'wood_pallet': '../img/wood_pallet_texture.JPG'
     };
     var textures = {};
     var loaded_textures = 0;
