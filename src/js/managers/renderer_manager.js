@@ -29,5 +29,6 @@ RendererManager.prototype.render = function () {
     requestAnimationFrame(function() {
         instance.render();
     });
+    this.scene_manager.update_physics();
     this.renderer.render(this.scene_manager.scene, this.camera_manager.camera);
 };

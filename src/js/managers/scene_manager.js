@@ -3,6 +3,8 @@ function SceneManager() {
      * A class responsible for scene operations.
      */
     this.scene = new THREE.Scene();
+    this.world = new CANNON.World();
+    this.world.gravity.set(0, -9.82, 0);
     this.textures = null;
     this.floor = null;
     this.sphere = null;
@@ -24,21 +26,27 @@ SceneManager.prototype.build_scene = function (callback) {
 
             instance.floor = new Floor(20, 20, [0, 0, 0], instance.textures['wood_floor']);
             instance.sphere = new Sphere(0.30, [-3, 0.30 + instance.floor.thickness/2, 5], instance.textures['cannon']);
-            instance.cannon = new Cannon(.30, 1.3, 15, [-5, 0.60 + instance.floor.thickness/2, 5], instance.textures['cannon']);
+            instance.cannon = new Cannon(.31, 1.3, 15, [-5, 0.62 + instance.floor.thickness/2, 5], instance.textures['cannon']);
 
             instance.cannon.rotate(0, 90, 0);
             instance.point_light_one.position.set(-1, 2, 9);
             instance.point_light_two.position.set(-9, 2, 9);
 
             instance.floor.add_to_scene(instance.scene);
+            instance.floor.add_to_world(instance.world);
             instance.sphere.add_to_scene(instance.scene);
             instance.cannon.add_to_scene(instance.scene);
             instance.scene.add(instance.point_light_one);
             instance.scene.add(instance.point_light_two);
             instance.scene.add(instance.ambient_light);
 
+
             callback();
         });
     })(this);
+};
+SceneManager.prototype.update_physics = function () {
+    this.world.step(1/60);
+    this.floor.update_mesh();
 };
 
