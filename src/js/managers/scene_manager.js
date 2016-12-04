@@ -30,9 +30,10 @@ SceneManager.prototype.build_scene = function (callback) {
             instance.floor = new Floor(20, 50, [0, 0, 0], instance.textures['wood_floor']);
             instance.cannon = new Cannon(.31, 1.3, 15, [-9, 0.62 + instance.floor.thickness/2, 5], instance.textures['cannon']);
             instance.sphere = new Sphere(0.30, [-7.7, 1 + instance.floor.thickness/2, 5], instance.textures['cannon']);
-            instance.pallet = new Pallet(2, 3, [1.5, 1.5 + instance.floor.thickness/2, 5], instance.textures['wood_pallet']);
+            instance.pallet = new Pallet(2, 2.90, [1.5, 1.5 + instance.floor.thickness/2, 5], instance.textures['wood_pallet']);
 
             instance.cannon.rotate(0, 90, 0);
+            instance.pallet.rotate(0, -90, 0);
             instance.point_light_one.position.set(-9, 2, 5);
             instance.point_light_two.position.set(1.5, 2, 5);
             instance.point_light_three.position.set(12, 2, 5);

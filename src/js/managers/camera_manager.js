@@ -10,8 +10,8 @@ function CameraManager(width, height, initial_position) {
     this.height = height;
     this.camera = new THREE.PerspectiveCamera(45, this.width / this.height, 0.1, 100);
 
-    //this.camera.position.set(initial_position[0], initial_position[1], initial_position[2]);
+    this.camera.position.set(initial_position[0], initial_position[1], initial_position[2]);
   //  this.camera.rotateX(degrees_to_radians(-10));
-    this.camera.position.set(0, .5, 15);
-    this.camera.lookAt(new THREE.Vector3(0, .25, 0));
+  //  this.camera.position.set(1.5, .5, 15);
+    this.camera.lookAt(new THREE.Vector3(1.5, 1.75, 5));
 }
