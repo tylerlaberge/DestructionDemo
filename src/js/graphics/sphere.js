@@ -13,12 +13,17 @@ function Sphere(radius, center, texture){
     this.material = new THREE.MeshPhongMaterial({map: this.texture, side: THREE.DoubleSide});
     this.mesh = new THREE.Mesh(this.geometry, this.material);
 
-    this.mesh.position.x = center[0];
-    this.mesh.position.y = center[1];
-    this.mesh.position.z = center[2];
-
- //   this.mesh.rotateY(30);
+    this.body = new CANNON.Body({
+        mass: 5,
+        position: new CANNON.Vec3(center[0], center[1], center[2]),
+        type: CANNON.Body.DYNAMIC,
+        shape: new CANNON.Sphere(this.radius)
+    });
 }
+Sphere.prototype.update_mesh = function () {
+    this.mesh.position.copy(this.body.position);
+    this.mesh.quaternion.copy(this.body.quaternion);
+};
 Sphere.prototype.add_to_scene = function (scene) {
     /*
      * Add this sphere to a scene.
@@ -26,6 +31,9 @@ Sphere.prototype.add_to_scene = function (scene) {
      * @param scene: The scene to add this sphere to. (THREE.Scene)
      */
     scene.add(this.mesh);
+};
+Sphere.prototype.add_to_world = function (world) {
+    world.addBody(this.body);
 };
 
 

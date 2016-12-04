@@ -12,6 +12,6 @@ function CameraManager(width, height, initial_position) {
 
     this.camera.position.set(initial_position[0], initial_position[1], initial_position[2]);
   //  this.camera.rotateX(degrees_to_radians(-10));
-  //  this.camera.position.set(0, 0.25, 15);
+   // this.camera.position.set(0, 0.25, 30);
     this.camera.lookAt(new THREE.Vector3(0, 0, 0));
 }

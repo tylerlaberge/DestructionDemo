@@ -15,8 +15,8 @@ function Floor(length, width, center_vertex, texture) {
     this.mesh = new THREE.Mesh(this.geometry, this.material);
 
     this.body = new CANNON.Body({
-        mass: 0,
-        shape: new CANNON.Box(new CANNON.Vec3(this.width/2, this.height/2, this.depth/2))
+        type: CANNON.Body.STATIC,
+        shape: new CANNON.Plane()
     });
 
     this.init();
@@ -28,20 +28,13 @@ Floor.prototype.init = function () {
 
     this.mesh.rotateX(degrees_to_radians(-90));
 
-    this.update_body();
+    this.body.position.copy(new THREE.Vector3(this.x, this.y + this.thickness/2, this.z));
+    this.body.quaternion.copy(this.mesh.quaternion);
+
     this.update_mesh();
 };
-Floor.prototype.update_body = function () {
-    this.body.position.x = this.mesh.position.x;
-    this.body.position.y = this.mesh.position.y;
-    this.body.position.z = this.mesh.position.z;
-
-    this.body.quaternion.x = this.mesh.quaternion.x;
-    this.body.quaternion.y = this.mesh.quaternion.y;
-    this.body.quaternion.z = this.mesh.quaternion.z;
-};
 Floor.prototype.update_mesh = function () {
-    this.mesh.position.copy(this.body.position);
+    this.mesh.position.copy(new CANNON.Vec3(this.body.x, this.body.y - this.thickness/2, this.body.z));
     this.mesh.quaternion.copy(this.body.quaternion);
 };
 Floor.prototype.add_to_scene = function (scene) {
