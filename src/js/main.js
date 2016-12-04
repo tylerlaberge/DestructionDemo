@@ -7,7 +7,7 @@ window.onload = function () {
     //Create the scene. When finished create the camera and render managers.
     scene_manager.build_scene(function () {
         var camera_manager = new CameraManager(WIDTH, HEIGHT,
-            [-11, 5, 13]);
+            [0, 3, 13]);
         var renderer_manager = new RendererManager(WIDTH, HEIGHT, scene_manager, camera_manager);
 
         //Render the scene.

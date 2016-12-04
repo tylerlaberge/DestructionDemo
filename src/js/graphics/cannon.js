@@ -61,11 +61,16 @@ Cannon.prototype.__build_barrel = function () {
     var tube_geometry = new THREE.CylinderGeometry(
         this.barrel_radius, this.barrel_radius, this.barrel_length, 100, 100, true
     );
-    var tube_end_geometry = new THREE.SphereGeometry(
+    var tube_base_geometry = new THREE.SphereGeometry(
         this.barrel_radius, 100, 100
     );
+    var tube_end_geometry = new THREE.TorusGeometry(
+        this.barrel_radius, .05, 100, 100
+    );
+
 
     var tube_mesh = new THREE.Mesh(tube_geometry);
+    var tube_base_mesh = new THREE.Mesh(tube_base_geometry);
     var tube_end_mesh = new THREE.Mesh(tube_end_geometry);
 
     tube_mesh.position.set(0, 0, 0);
@@ -75,12 +80,17 @@ Cannon.prototype.__build_barrel = function () {
     var z2 = Math.sin(degrees_to_radians(90 - this.barrel_rotation)) * this.barrel_length;
 
     tube_mesh.position.set(0, y2/2, z2/2);
+    tube_base_mesh.position.set(0, 0, 0);
     tube_end_mesh.position.set(0, 0, 0);
+    tube_end_mesh.rotateX(degrees_to_radians(180 - this.barrel_rotation));
+    tube_end_mesh.position.set(0, y2, z2);
 
     tube_mesh.updateMatrix();
+    tube_base_mesh.updateMatrix();
     tube_end_mesh.updateMatrix();
 
     barrel_geometry.merge(tube_mesh.geometry, tube_mesh.matrix);
+    barrel_geometry.merge(tube_base_mesh.geometry, tube_base_mesh.matrix);
     barrel_geometry.merge(tube_end_mesh.geometry, tube_end_mesh.matrix);
 
     return new THREE.Mesh(barrel_geometry);
