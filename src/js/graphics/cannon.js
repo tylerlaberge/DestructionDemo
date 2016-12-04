@@ -2,6 +2,7 @@ function Cannon(barrel_radius, barrel_length, barrel_rotation, center_vertex, te
     this.barrel_radius = barrel_radius;
     this.barrel_length = barrel_length;
     this.barrel_rotation = barrel_rotation;
+
     this.x = center_vertex[0];
     this.y = center_vertex[1];
     this.z = center_vertex[2];

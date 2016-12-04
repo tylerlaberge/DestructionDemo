@@ -26,8 +26,8 @@ SceneManager.prototype.build_scene = function (callback) {
             instance.textures = textures;
 
             instance.floor = new Floor(20, 20, [0, 0, 0], instance.textures['wood_floor']);
-            instance.sphere = new Sphere(0.30, [-3, 3 + instance.floor.thickness/2, 5], instance.textures['cannon']);
             instance.cannon = new Cannon(.31, 1.3, 15, [-5, 0.62 + instance.floor.thickness/2, 5], instance.textures['cannon']);
+            instance.sphere = new Sphere(0.30, [-3.5, 1 + instance.floor.thickness/2, 5], instance.textures['cannon']);
 
             instance.cannon.rotate(0, 90, 0);
             instance.point_light_one.position.set(-1, 2, 9);

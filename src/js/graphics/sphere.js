@@ -13,9 +13,13 @@ function Sphere(radius, center, texture){
     this.material = new THREE.MeshPhongMaterial({map: this.texture, side: THREE.DoubleSide});
     this.mesh = new THREE.Mesh(this.geometry, this.material);
 
+    var velocity_x = 50*Math.cos(degrees_to_radians(90 - 15));
+    var velocity_y = Math.sin(degrees_to_radians(90 - 15));
+
     this.body = new CANNON.Body({
-        mass: 5,
+        mass: 15,
         position: new CANNON.Vec3(center[0], center[1], center[2]),
+        velocity: new CANNON.Vec3(velocity_x, velocity_y, 0),
         type: CANNON.Body.DYNAMIC,
         shape: new CANNON.Sphere(this.radius)
     });
