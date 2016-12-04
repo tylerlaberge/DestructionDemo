@@ -13,8 +13,8 @@ function Sphere(radius, center, texture){
     this.material = new THREE.MeshPhongMaterial({map: this.texture, side: THREE.DoubleSide});
     this.mesh = new THREE.Mesh(this.geometry, this.material);
 
-    var velocity_x = 50*Math.cos(degrees_to_radians(90 - 15));
-    var velocity_y = Math.sin(degrees_to_radians(90 - 15));
+    var velocity_x = 100*Math.cos(degrees_to_radians(90 - 15));
+    var velocity_y = 3*Math.sin(degrees_to_radians(90 - 15));
 
     this.body = new CANNON.Body({
         mass: 15,
