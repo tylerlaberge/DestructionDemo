@@ -3,7 +3,7 @@ function Pallet(width, height, center, texture){
     this.height = height;
     this.texture = texture;
 
-    this.material = new THREE.MeshLambertMaterial({color: 0x0000ff, side: THREE.DoubleSide});
+    this.material = new THREE.MeshLambertMaterial({map: this.texture, side: THREE.DoubleSide});
     this.mesh = this.__build_pallet();
     this.mesh.position.set(center[0], center[1], center[2]);
 }
