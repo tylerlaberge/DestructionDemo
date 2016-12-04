@@ -36,14 +36,15 @@ SceneManager.prototype.build_scene = function (callback) {
             instance.floor.add_to_scene(instance.scene);
             instance.floor.add_to_world(instance.world);
 
-            instance.sphere.add_to_scene(instance.scene);
-            instance.sphere.add_to_world(instance.world);
-
             instance.cannon.add_to_scene(instance.scene);
             instance.scene.add(instance.point_light_one);
             instance.scene.add(instance.point_light_two);
             instance.scene.add(instance.ambient_light);
 
+            window.addEventListener('mousedown', function () {
+                instance.sphere.add_to_scene(instance.scene);
+                instance.sphere.add_to_world(instance.world);
+            });
 
             callback();
         });
