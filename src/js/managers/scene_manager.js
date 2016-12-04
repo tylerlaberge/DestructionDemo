@@ -13,6 +13,7 @@ function SceneManager() {
     this.ambient_light = new THREE.AmbientLight( 0x404040 );
     this.point_light_one = new THREE.PointLight({color: 0xffffff, intensity: 1, distance: 10});
     this.point_light_two = new THREE.PointLight({color: 0xffffff, intensity: 1, distance: 10});
+    this.point_light_three = new THREE.PointLight({color: 0xffffff, intensity: 1, distance: 10});
 
 }
 SceneManager.prototype.build_scene = function (callback) {
@@ -30,8 +31,9 @@ SceneManager.prototype.build_scene = function (callback) {
             instance.sphere = new Sphere(0.30, [-7.7, 1 + instance.floor.thickness/2, 5], instance.textures['cannon']);
 
             instance.cannon.rotate(0, 90, 0);
-            instance.point_light_one.position.set(-1, 2, 9);
-            instance.point_light_two.position.set(-9, 2, 9);
+            instance.point_light_one.position.set(-9, 2, 5);
+            instance.point_light_two.position.set(1.5, 2, 5);
+            instance.point_light_three.position.set(12, 2, 5);
 
             instance.floor.add_to_scene(instance.scene);
             instance.floor.add_to_world(instance.world);
@@ -39,6 +41,7 @@ SceneManager.prototype.build_scene = function (callback) {
             instance.cannon.add_to_scene(instance.scene);
             instance.scene.add(instance.point_light_one);
             instance.scene.add(instance.point_light_two);
+            instance.scene.add(instance.point_light_three);
             instance.scene.add(instance.ambient_light);
 
             window.addEventListener('mousedown', function () {
