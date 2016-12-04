@@ -16,7 +16,7 @@ function Floor(length, width, center_vertex, texture) {
 
     this.body = new CANNON.Body({
         type: CANNON.Body.STATIC,
-        shape: new CANNON.Plane()
+        shape: new CANNON.Box(new CANNON.Vec3(25, 10, .25))
     });
 
     this.init();
