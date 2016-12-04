@@ -16,7 +16,7 @@ window.load_textures = function (callback) {
     var texture_links = {
         'cannon': '../img/cannonball_texture.jpg',
         'wood_floor': '../img/wood_floor_texture.jpg',
-        'wood_pallet': '../img/wood_pallet_texture.JPG'
+        'wood_pallet': '../img/wooden_pallet_texture.jpg'
     };
     var textures = {};
     var loaded_textures = 0;

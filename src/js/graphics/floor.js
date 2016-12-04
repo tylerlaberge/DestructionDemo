@@ -28,13 +28,13 @@ Floor.prototype.init = function () {
 
     this.mesh.rotateX(degrees_to_radians(-90));
 
-    this.body.position.copy(new THREE.Vector3(this.x, this.y + this.thickness/2, this.z));
+    this.body.position.copy(new THREE.Vector3(this.x, this.y, this.z));
     this.body.quaternion.copy(this.mesh.quaternion);
 
     this.update_mesh();
 };
 Floor.prototype.update_mesh = function () {
-    this.mesh.position.copy(new CANNON.Vec3(this.body.x, this.body.y - this.thickness/2, this.body.z));
+    this.mesh.position.copy(this.body.position);
     this.mesh.quaternion.copy(this.body.quaternion);
 };
 Floor.prototype.add_to_scene = function (scene) {
