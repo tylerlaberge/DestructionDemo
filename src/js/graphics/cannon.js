@@ -1,8 +1,7 @@
-function Cannon(barrel_radius, barrel_length, barrel_rotation, initial_position, texture) {
+function Cannon(barrel_radius, barrel_length, barrel_rotation, texture) {
     this.barrel_radius = barrel_radius;
     this.barrel_length = barrel_length;
     this.barrel_rotation = barrel_rotation;
-    this.initial_position = initial_position;
     this.texture = texture;
 
     this.geometry = null;
@@ -16,7 +15,6 @@ Cannon.prototype.__init = function () {
     this.geometry = this.__build_cannon();
     this.material = new THREE.MeshPhongMaterial({map: this.texture, side: THREE.DoubleSide});
     this.mesh = new THREE.Mesh(this.geometry, this.material);
-    this.mesh.position.set(this.initial_position[0], this.initial_position[1], this.initial_position[2]);
 
     Graphic.call(this, this.geometry, this.material, this.mesh);
 };

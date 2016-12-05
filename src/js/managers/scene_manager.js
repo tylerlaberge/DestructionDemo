@@ -27,22 +27,32 @@ SceneManager.prototype.build_scene = function (callback) {
         window.load_textures(function (textures) {
             instance.textures = textures;
 
-            instance.floor = new Floor(20, 50, [0, 0, 0], instance.textures['wood_floor']);
-            instance.cannon = new Cannon(.31, 1.3, 15, [-9, 0.62 + instance.floor.thickness/2, 5], instance.textures['cannon']);
-            instance.cannonball = new Cannonball(0.30, [-7.7, 1 + instance.floor.thickness/2, 5], instance.textures['cannon']);
-            instance.pallet = new Pallet(2, 2.90, [1.5, 1.5 + instance.floor.thickness/2, 5], instance.textures['wood_pallet']);
+            instance.floor = new Floor(20, 50, instance.textures['wood_floor']);
+            instance.cannon = new Cannon(.31, 1.3, 15, instance.textures['cannon']);
+            instance.cannonball = new Cannonball(0.30, instance.textures['cannon']);
+            instance.pallet = new Pallet(2, 2.90, instance.textures['wood_pallet']);
 
-            instance.cannon.rotateY(90);
-            instance.pallet.rotateY(-90);
+            instance.floor.set_position(0, 0, 0);
+            instance.cannon.set_position(-9, 0.62 + instance.floor.thickness/2, 5);
+            instance.cannonball.set_position(-7.7, 1 + instance.floor.thickness/2, 5);
+            instance.pallet.set_position(1.5, 1.5 + instance.floor.thickness/2, 5);
+
+            instance.cannon.set_rotation(0, 90, 0);
+            instance.pallet.set_rotation(0, -90, 0);
+
+            instance.cannonball.set_velocity(
+                100*Math.cos(degrees_to_radians(90 - 15)), 3*Math.sin(degrees_to_radians(90 - 15)), 0
+            );
+
             instance.point_light_one.position.set(-9, 2, 5);
             instance.point_light_two.position.set(1.5, 2, 5);
             instance.point_light_three.position.set(12, 2, 5);
 
             instance.floor.add_to_scene(instance.scene);
-            instance.floor.add_to_world(instance.world);
-
             instance.cannon.add_to_scene(instance.scene);
             instance.pallet.add_to_scene(instance.scene);
+
+            instance.floor.add_to_world(instance.world);
 
             instance.scene.add(instance.point_light_one);
             instance.scene.add(instance.point_light_two);

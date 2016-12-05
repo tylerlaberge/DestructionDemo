@@ -1,7 +1,6 @@
-function Pallet(width, height, initial_position, texture){
+function Pallet(width, height, texture){
     this.width = width;
     this.height = height;
-    this.initial_position = initial_position;
     this.texture = texture;
 
     this.geometry = null;
@@ -15,7 +14,6 @@ Pallet.prototype.__init = function () {
     this.geometry = this.__build_pallet();
     this.material = new THREE.MeshLambertMaterial({map: this.texture, side: THREE.DoubleSide});
     this.mesh = new THREE.Mesh(this.geometry, this.material);
-    this.mesh.position.set(this.initial_position[0], this.initial_position[1], this.initial_position[2]);
 
     Graphic.call(this, this.geometry, this.material, this.mesh);
 };
