@@ -9,6 +9,7 @@ function Pallet(width, height, texture){
     this.geometry = null;
     this.material = null;
     this.mesh = null;
+    this.body = null;
 
     this.__init();
 }
@@ -18,7 +19,13 @@ Pallet.prototype.__init = function () {
     this.material = new THREE.MeshLambertMaterial({map: this.texture, side: THREE.DoubleSide});
     this.mesh = new THREE.Mesh(this.geometry, this.material);
 
-    Graphic.call(this, this.geometry, this.material, this.mesh);
+    this.body = new CANNON.Body({
+        mass: 5,
+        type: CANNON.Body.DYNAMIC,
+        shape: new CANNON.Box(new CANNON.Vec3(this.width/2, this.height/2, this.beam_thickness*2))
+    });
+
+    Graphic.call(this, this.geometry, this.material, this.mesh, this.body);
 };
 Pallet.prototype.__build_pallet = function () {
     var pallet = new THREE.Geometry();

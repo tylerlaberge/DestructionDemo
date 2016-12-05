@@ -14,5 +14,11 @@ window.onload = function () {
         camera.look_at(pallet_position.x, pallet_position.y, pallet_position.z);
 
         renderer.render();
+
+        var reset_button = document.getElementById("reset_button");
+        reset_button.style.display = 'block';
+        reset_button.onclick = function () {
+            scene.reset();
+        };
     });
 };

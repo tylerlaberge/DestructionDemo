@@ -58,6 +58,14 @@ Graphic.prototype.add_to_world = function (world) {
         world.addBody(this.body);
     }
 };
+Graphic.prototype.remove_from_scene = function (scene) {
+    scene.remove(this.mesh);
+};
+Graphic.prototype.remove_from_world = function (world) {
+    if (this.body != null) {
+        world.removeBody(this.body);
+    }
+};
 Graphic.prototype.update_physics = function () {
     if (this.body != null) {
         this.mesh.position.copy(this.body.position);

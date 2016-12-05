@@ -53,15 +53,18 @@ Scene.prototype.build = function (callback) {
             instance.pallet.add_to_scene(instance.scene);
 
             instance.floor.add_to_world(instance.world);
+            instance.pallet.add_to_world(instance.world);
 
             instance.scene.add(instance.point_light_one);
             instance.scene.add(instance.point_light_two);
             instance.scene.add(instance.point_light_three);
             instance.scene.add(instance.ambient_light);
 
-            window.addEventListener('mousedown', function () {
-                instance.cannonball.add_to_scene(instance.scene);
-                instance.cannonball.add_to_world(instance.world);
+            window.addEventListener('keydown', function (event) {
+                if (event.keyCode == 32) {
+                    instance.cannonball.add_to_scene(instance.scene);
+                    instance.cannonball.add_to_world(instance.world);
+                }
             });
 
             callback();
@@ -72,5 +75,30 @@ Scene.prototype.update_physics = function () {
     this.world.step(1.0/60.0);
     this.floor.update_physics();
     this.cannonball.update_physics();
+    this.pallet.update_physics();
+};
+Scene.prototype.reset = function () {
+    this.cannonball.remove_from_scene(this.scene);
+    this.pallet.remove_from_scene(this.scene);
+
+    this.cannonball.remove_from_world(this.world);
+    this.pallet.remove_from_world(this.world);
+
+    this.cannonball = new Cannonball(0.30, this.textures['cannon']);
+    this.pallet = new Pallet(2, 2.90, this.textures['wood_pallet']);
+
+    this.cannonball.set_position(-7.7, 1 + this.floor.thickness/2, 5);
+    this.pallet.set_position(1.5, 1.5 + this.floor.thickness/2, 5);
+
+    this.pallet.set_rotation(0, -90, 0);
+
+    this.cannonball.set_velocity(
+        100*Math.cos(degrees_to_radians(90 - 15)), 3*Math.sin(degrees_to_radians(90 - 15)), 0
+    );
+
+    this.pallet.add_to_scene(this.scene);
+    this.pallet.add_to_world(this.world);
+
+    this.update_physics();
 };
 
