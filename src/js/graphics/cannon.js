@@ -2,16 +2,24 @@ function Cannon(barrel_radius, barrel_length, barrel_rotation, initial_position,
     this.barrel_radius = barrel_radius;
     this.barrel_length = barrel_length;
     this.barrel_rotation = barrel_rotation;
+    this.initial_position = initial_position;
     this.texture = texture;
 
+    this.geometry = null;
+    this.material = null;
+    this.mesh = null;
+
+    this.__init();
+}
+Cannon.prototype = Object.create(Graphic.prototype);
+Cannon.prototype.__init = function () {
     this.geometry = this.__build_cannon();
     this.material = new THREE.MeshPhongMaterial({map: this.texture, side: THREE.DoubleSide});
     this.mesh = new THREE.Mesh(this.geometry, this.material);
-    this.mesh.position.set(initial_position[0], initial_position[1], initial_position[2]);
+    this.mesh.position.set(this.initial_position[0], this.initial_position[1], this.initial_position[2]);
 
     Graphic.call(this, this.geometry, this.material, this.mesh);
-}
-Cannon.prototype = Object.create(Graphic.prototype);
+};
 Cannon.prototype.__build_cannon = function () {
     var cannon = new THREE.Geometry();
 

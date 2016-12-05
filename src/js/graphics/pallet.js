@@ -1,16 +1,24 @@
 function Pallet(width, height, initial_position, texture){
     this.width = width;
     this.height = height;
+    this.initial_position = initial_position;
     this.texture = texture;
 
+    this.geometry = null;
+    this.material = null;
+    this.mesh = null;
+
+    this.__init();
+}
+Pallet.prototype = Object.create(Graphic.prototype);
+Pallet.prototype.__init = function () {
     this.geometry = this.__build_pallet();
     this.material = new THREE.MeshLambertMaterial({map: this.texture, side: THREE.DoubleSide});
     this.mesh = new THREE.Mesh(this.geometry, this.material);
-    this.mesh.position.set(initial_position[0], initial_position[1], initial_position[2]);
+    this.mesh.position.set(this.initial_position[0], this.initial_position[1], this.initial_position[2]);
 
     Graphic.call(this, this.geometry, this.material, this.mesh);
-}
-Pallet.prototype = Object.create(Graphic.prototype);
+};
 Pallet.prototype.__build_pallet = function () {
     var pallet = new THREE.Geometry();
 
