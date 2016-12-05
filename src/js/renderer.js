@@ -1,4 +1,4 @@
-function RendererManager(width, height, scene_manager, camera_manager) {
+function Renderer(width, height, scene, camera) {
     /*
      * A class for managing rendering operations.
      *
@@ -10,18 +10,18 @@ function RendererManager(width, height, scene_manager, camera_manager) {
     this.renderer = new THREE.WebGLRenderer();
     this.width = width;
     this.height = height;
-    this.scene_manager = scene_manager;
-    this.camera_manager = camera_manager;
+    this.scene = scene;
+    this.camera = camera;
     this.init();
 }
-RendererManager.prototype.init = function () {
+Renderer.prototype.init = function () {
     /*
      * Initialize this object.
      */
     this.renderer.setSize(this.width, this.height);
     document.body.appendChild(this.renderer.domElement);
 };
-RendererManager.prototype.render = function () {
+Renderer.prototype.render = function () {
     /*
      * Render the scene.
      */
@@ -29,6 +29,6 @@ RendererManager.prototype.render = function () {
     requestAnimationFrame(function() {
         instance.render();
     });
-    this.scene_manager.update_physics();
-    this.renderer.render(this.scene_manager.scene, this.camera_manager.camera);
+    this.scene.update_physics();
+    this.renderer.render(this.scene.scene, this.camera.camera);
 };

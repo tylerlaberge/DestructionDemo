@@ -1,4 +1,4 @@
-function SceneManager() {
+function Scene() {
     /*
      * A class responsible for scene operations.
      */
@@ -17,7 +17,7 @@ function SceneManager() {
     this.point_light_three = new THREE.PointLight({color: 0xffffff, intensity: 1, distance: 10});
 
 }
-SceneManager.prototype.build_scene = function (callback) {
+Scene.prototype.build = function (callback) {
     /*
      * Builds the scene.
      *
@@ -68,7 +68,7 @@ SceneManager.prototype.build_scene = function (callback) {
         });
     })(this);
 };
-SceneManager.prototype.update_physics = function () {
+Scene.prototype.update_physics = function () {
     this.world.step(1.0/60.0);
     this.floor.update_physics();
     this.cannonball.update_physics();

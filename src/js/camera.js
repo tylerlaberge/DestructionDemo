@@ -1,4 +1,4 @@
-function CameraManager(width, height) {
+function Camera(width, height) {
     /*
      * A class responsible for managing camera operations.
      *
@@ -9,9 +9,9 @@ function CameraManager(width, height) {
     this.height = height;
     this.camera = new THREE.PerspectiveCamera(45, this.width / this.height, 0.1, 100);
 }
-CameraManager.prototype.set_position = function(x, y, z) {
+Camera.prototype.set_position = function(x, y, z) {
     this.camera.position.set(x, y, z);
 };
-CameraManager.prototype.look_at = function (x, y, z) {
+Camera.prototype.look_at = function (x, y, z) {
     this.camera.lookAt(new THREE.Vector3(x, y, z));
 };
