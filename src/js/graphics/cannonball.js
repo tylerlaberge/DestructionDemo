@@ -1,11 +1,4 @@
-function Sphere(radius, center, texture){
-    /*
-     * A class which wraps the creation of a spheres geometry, material, and mesh.
-     *
-     * @param radius: The radius of the sphere. (int)
-     * @param center: The center vertex of the sphere. [x, y, z]
-     * @param texture: The texture to apply to the sphere (THREE.Texture)
-     */
+function Cannonball(radius, initial_position, texture){
     this.radius = radius;
     this.texture = texture;
 
@@ -18,25 +11,20 @@ function Sphere(radius, center, texture){
 
     this.body = new CANNON.Body({
         mass: 15,
-        position: new CANNON.Vec3(center[0], center[1], center[2]),
+        position: new CANNON.Vec3(initial_position[0], initial_position[1], initial_position[2]),
         velocity: new CANNON.Vec3(velocity_x, velocity_y, 0),
         type: CANNON.Body.DYNAMIC,
         shape: new CANNON.Sphere(this.radius)
     });
+
+    Graphic.call(this, this.geometry, this.material, this.mesh);
 }
-Sphere.prototype.update_mesh = function () {
+Cannonball.prototype = Object.create(Graphic.prototype);
+Cannonball.prototype.update_physics = function () {
     this.mesh.position.copy(this.body.position);
     this.mesh.quaternion.copy(this.body.quaternion);
 };
-Sphere.prototype.add_to_scene = function (scene) {
-    /*
-     * Add this sphere to a scene.
-     *
-     * @param scene: The scene to add this sphere to. (THREE.Scene)
-     */
-    scene.add(this.mesh);
-};
-Sphere.prototype.add_to_world = function (world) {
+Cannonball.prototype.add_to_world = function (world) {
     world.addBody(this.body);
 };
 

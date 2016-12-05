@@ -1,17 +1,16 @@
-function Pallet(width, height, center, texture){
+function Pallet(width, height, initial_position, texture){
     this.width = width;
     this.height = height;
     this.texture = texture;
 
+    this.geometry = this.__build_pallet();
     this.material = new THREE.MeshLambertMaterial({map: this.texture, side: THREE.DoubleSide});
-    this.mesh = this.__build_pallet();
-    this.mesh.position.set(center[0], center[1], center[2]);
+    this.mesh = new THREE.Mesh(this.geometry, this.material);
+    this.mesh.position.set(initial_position[0], initial_position[1], initial_position[2]);
+
+    Graphic.call(this, this.geometry, this.material, this.mesh);
 }
-Pallet.prototype.rotate = function (x, y, z) {
-    this.mesh.rotateX(degrees_to_radians(x));
-    this.mesh.rotateY(degrees_to_radians(y));
-    this.mesh.rotateZ(degrees_to_radians(z));
-};
+Pallet.prototype = Object.create(Graphic.prototype);
 Pallet.prototype.__build_pallet = function () {
     var pallet = new THREE.Geometry();
 
@@ -43,10 +42,7 @@ Pallet.prototype.__build_pallet = function () {
         beam_three_mesh.updateMatrix();
         pallet.merge(beam_three_mesh.geometry, beam_three_mesh.matrix);
     }
-    return new THREE.Mesh(pallet, this.material);
-};
-Pallet.prototype.add_to_scene = function (scene) {
-    scene.add(this.mesh);
+    return pallet;
 };
 
 

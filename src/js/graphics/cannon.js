@@ -1,35 +1,30 @@
-function Cannon(barrel_radius, barrel_length, barrel_rotation, center_vertex, texture) {
+function Cannon(barrel_radius, barrel_length, barrel_rotation, initial_position, texture) {
     this.barrel_radius = barrel_radius;
     this.barrel_length = barrel_length;
     this.barrel_rotation = barrel_rotation;
-
-    this.x = center_vertex[0];
-    this.y = center_vertex[1];
-    this.z = center_vertex[2];
     this.texture = texture;
 
+    this.geometry = this.__build_cannon();
     this.material = new THREE.MeshPhongMaterial({map: this.texture, side: THREE.DoubleSide});
-
-    this.base = this.__build_base();
-    this.barrel = this.__build_barrel();
-
-    this.geometry = new THREE.Geometry();
-
-    this.base.updateMatrix();
-    this.barrel.updateMatrix();
-
-    this.geometry.merge(this.base.geometry, this.base.matrix);
-    this.geometry.merge(this.barrel.geometry, this.barrel.matrix);
-
     this.mesh = new THREE.Mesh(this.geometry, this.material);
-    this.mesh.position.set(this.x, this.y, this.z);
+    this.mesh.position.set(initial_position[0], initial_position[1], initial_position[2]);
+
+    Graphic.call(this, this.geometry, this.material, this.mesh);
 }
-Cannon.prototype.rotate = function (x, y, z) {
-    this.mesh.position.set(0, 0, 0);
-    this.mesh.rotateX(degrees_to_radians(x));
-    this.mesh.rotateY(degrees_to_radians(y));
-    this.mesh.rotateZ(degrees_to_radians(z));
-    this.mesh.position.set(this.x, this.y, this.z);
+Cannon.prototype = Object.create(Graphic.prototype);
+Cannon.prototype.__build_cannon = function () {
+    var cannon = new THREE.Geometry();
+
+    var base = this.__build_base();
+    var barrel = this.__build_barrel();
+
+    base.updateMatrix();
+    barrel.updateMatrix();
+
+    cannon.merge(base.geometry, base.matrix);
+    cannon.merge(barrel.geometry, barrel.matrix);
+
+    return cannon;
 };
 Cannon.prototype.__build_base = function () {
     var base_geometry = new THREE.Geometry();
@@ -95,7 +90,4 @@ Cannon.prototype.__build_barrel = function () {
     barrel_geometry.merge(tube_end_mesh.geometry, tube_end_mesh.matrix);
 
     return new THREE.Mesh(barrel_geometry);
-};
-Cannon.prototype.add_to_scene = function (scene) {
-    scene.add(this.mesh);
 };
