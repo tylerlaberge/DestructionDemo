@@ -24,7 +24,7 @@ Floor.prototype.__init = function () {
 
     this.body = new CANNON.Body({
         type: CANNON.Body.STATIC,
-        shape: new CANNON.Box(new CANNON.Vec3(25, 10, .25))
+        shape: new CANNON.Box(new CANNON.Vec3(this.width/2, this.length/2, this.thickness/2))
     });
     Graphic.call(this, this.geometry, this.material, this.mesh, this.body);
 };

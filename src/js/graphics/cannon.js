@@ -37,7 +37,7 @@ Cannon.prototype.__build_base = function () {
 
     var right_leg_geometry = new THREE.BoxGeometry(this.barrel_radius/2, this.barrel_radius*2, this.barrel_length/2);
     var left_leg_geometry = new THREE.BoxGeometry(this.barrel_radius/2, this.barrel_radius*2, this.barrel_length/2);
-    var connector_geomerty = new THREE.BoxGeometry(this.barrel_radius * 3, this.barrel_radius/5, this.barrel_length/2);
+    var connector_geomerty = new THREE.BoxGeometry(this.barrel_radius*3, this.barrel_radius/5, this.barrel_length/2);
 
     var left_leg_mesh = new THREE.Mesh(left_leg_geometry);
     var right_leg_mesh = new THREE.Mesh(right_leg_geometry);
@@ -69,7 +69,6 @@ Cannon.prototype.__build_barrel = function () {
     var tube_end_geometry = new THREE.TorusGeometry(
         this.barrel_radius, .05, 100, 100
     );
-
 
     var tube_mesh = new THREE.Mesh(tube_geometry);
     var tube_base_mesh = new THREE.Mesh(tube_base_geometry);
