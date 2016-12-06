@@ -4,6 +4,11 @@ html, body {
     margin: 0;
     overflow: hidden;
 }
+a {
+    color: #C0C0D4;
+    text-decoration: none; /* no underline */
+    display: block;
+}
 #my_canvas {
     position: absolute;
     left: 0;
@@ -23,10 +28,20 @@ html, body {
 #reset_button {
     display: none;
     position: absolute;
-    left: 0;
+    left: 205px;
     top: 0;
     width: 100px;
     height: 50px;
+}
+#source_button {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 200px;
+    height: 50px;
+}
+.ui_button {
     background-color: #48477E;
     color: #C0C0D4;
     text-align: center;
@@ -34,7 +49,7 @@ html, body {
     margin: 5px;
 }
 /* button hover style if required */
-#reset_button:hover {
+.ui_button:hover {
 
 }
 /* generated element for shine effect.
@@ -45,7 +60,7 @@ html, body {
  * will play in reverse when your mouse
  * leaves the element
  */
-#reset_button:after {
+.ui_button:after {
     content: "";
     position: absolute;
     top: 0px;
@@ -64,7 +79,7 @@ html, body {
  * 100% and opacity to 0 so the element
  * grows and fades out
  */
-#reset_button:hover:after {
+.ui_button:hover:after {
     width: 120%;
     background-color: rgba(255,255,255,0);
     -webkit-transition: all 0.3s ease-out;
@@ -73,7 +88,7 @@ html, body {
     -o-transition: all 0.3s ease-out;
     transition: all 0.3s ease-out;
 }
-#reset_button:active {
+.ui_button:active {
     background-color: #696896;
 }
 .absolute-center {

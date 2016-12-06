@@ -16,6 +16,7 @@ window.onload = function () {
         renderer.render();
 
         document.getElementById("loading_screen").style.display = "none";
+        document.getElementById("source_button").style.display = "block";
 
         var reset_button = document.getElementById("reset_button");
         reset_button.style.display = 'block';
