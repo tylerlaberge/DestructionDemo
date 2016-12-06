@@ -41,7 +41,7 @@ Pallet.prototype.__build_pallet = function () {
         pallet.merge(beam_mesh.geometry, beam_mesh.matrix);
     }
     for(var j = -1; j <= 1; j++) {
-        var beam_two_geometry = new THREE.BoxGeometry(this.width, this.beam_width, this.beam_thickness, 100, 100, 100);
+        var beam_two_geometry = new THREE.BoxGeometry(this.width, this.beam_width, this.beam_thickness, 10, 10, 10);
         var beam_two_mesh = new THREE.Mesh(beam_two_geometry);
 
         beam_two_mesh.position.set(0, j*(this.beam_width/2 - this.height/2), -this.beam_thickness);
