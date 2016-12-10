@@ -72,5 +72,11 @@ Graphic.prototype.update_physics = function () {
         this.mesh.quaternion.copy(this.body.quaternion);
     }
 };
+Graphic.prototype.update_body = function () {
+    if (this.body != null) {
+        this.body.position.copy(this.mesh.position);
+        this.body.quaternion.copy(this.mesh.quaternion);
+    }
+};
 
 

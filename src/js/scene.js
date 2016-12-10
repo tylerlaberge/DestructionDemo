@@ -7,6 +7,7 @@ function Scene() {
     this.world.gravity.set(0, -9.82, 0);
     this.world.broadphase = new CANNON.NaiveBroadphase();
     this.textures = null;
+    this.graphics = [];
     this.floor = null;
     this.cannonball = null;
     this.cannon = null;
@@ -15,7 +16,6 @@ function Scene() {
     this.point_light_one = new THREE.PointLight({color: 0xffffff, intensity: 1, distance: 10});
     this.point_light_two = new THREE.PointLight({color: 0xffffff, intensity: 1, distance: 10});
     this.point_light_three = new THREE.PointLight({color: 0xffffff, intensity: 1, distance: 10});
-    this.object_breaker = new THREE.ConvexObjectBreaker();
 }
 Scene.prototype.build = function (callback) {
     /*
@@ -60,14 +60,25 @@ Scene.prototype.build = function (callback) {
             instance.scene.add(instance.point_light_three);
             instance.scene.add(instance.ambient_light);
 
-            instance.object_breaker.prepareBreakableObject(
+            instance.graphics.push(instance.floor, instance.cannon, instance.cannonball, instance.pallet);
+           /* instance.object_breaker.prepareBreakableObject(
                 instance.pallet.mesh, instance.pallet.body.mass, new THREE.Vector3(), new THREE.Vector3(), true
-            );
+            );*/
+           /* var destroyed = false;
             instance.pallet.body.addEventListener('collide', function (event) {
-                if (event.body.id == instance.cannonball.body.id) {
-
+                if (!destroyed && event.body.id == instance.cannonball.body.id) {
+                    var debris = instance.pallet.destroy();
+                    instance.pallet.remove_from_scene(instance.scene);
+                    instance.pallet.remove_from_world(instance.world);
+                    for (var i = 0; i < debris.length; i++) {
+                        debris[i].add_to_scene(instance.scene);
+                        debris[i].add_to_world(instance.world);
+                        instance.graphics.push(debris[i]);
+                    }
+                    destroyed = true;
                 }
-            });
+
+            }); */
 
             window.addEventListener('keydown', function (event) {
                 if (event.keyCode == 32) {
@@ -82,9 +93,12 @@ Scene.prototype.build = function (callback) {
 };
 Scene.prototype.update_physics = function () {
     this.world.step(1.0/60.0);
-    this.floor.update_physics();
+    for(var i = 0; i < this.graphics.length; i++) {
+        this.graphics[i].update_physics();
+    }
+    /*this.floor.update_physics();
     this.cannonball.update_physics();
-    this.pallet.update_physics();
+    this.pallet.update_physics();*/
 };
 Scene.prototype.reset = function () {
     this.cannonball.remove_from_scene(this.scene);
