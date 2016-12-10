@@ -15,7 +15,7 @@ function Scene() {
     this.point_light_one = new THREE.PointLight({color: 0xffffff, intensity: 1, distance: 10});
     this.point_light_two = new THREE.PointLight({color: 0xffffff, intensity: 1, distance: 10});
     this.point_light_three = new THREE.PointLight({color: 0xffffff, intensity: 1, distance: 10});
-
+    this.object_breaker = new THREE.ConvexObjectBreaker();
 }
 Scene.prototype.build = function (callback) {
     /*
@@ -59,6 +59,15 @@ Scene.prototype.build = function (callback) {
             instance.scene.add(instance.point_light_two);
             instance.scene.add(instance.point_light_three);
             instance.scene.add(instance.ambient_light);
+
+            instance.object_breaker.prepareBreakableObject(
+                instance.pallet.mesh, instance.pallet.body.mass, new THREE.Vector3(), new THREE.Vector3(), true
+            );
+            instance.pallet.body.addEventListener('collide', function (event) {
+                if (event.body.id == instance.cannonball.body.id) {
+
+                }
+            });
 
             window.addEventListener('keydown', function (event) {
                 if (event.keyCode == 32) {
