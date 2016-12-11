@@ -106,12 +106,9 @@ Pallet.prototype.destroy = function () {
 Pallet.prototype.__build_support_beams = function () {
     var beams = [];
     for(var i = -1; i <= 1; i++) {
-        var beam_geometry = new THREE.BoxGeometry(this.beam_width, this.height, this.beam_thickness*2);
-        var beam_mesh = new THREE.Mesh(beam_geometry, this.material);
-
+        var beam_mesh = this.__build_support_beam();
         beam_mesh.rotateY(degrees_to_radians(90));
         beam_mesh.position.set(i*(this.beam_width/2 - this.width/2), 0, 0);
-
         beam_mesh.updateMatrix();
         beams.push(beam_mesh);
     }
@@ -120,11 +117,8 @@ Pallet.prototype.__build_support_beams = function () {
 Pallet.prototype.__build_back_beams = function () {
     var beams = [];
     for(var i = -1; i <= 1; i++) {
-        var beam_geometry = new THREE.BoxGeometry(this.width, this.beam_width, this.beam_thickness);
-        var beam_mesh = new THREE.Mesh(beam_geometry, this.material);
-
+        var beam_mesh = this.__build_cross_beam();
         beam_mesh.position.set(0, i*(this.beam_width/2 - this.height/2), -this.beam_thickness);
-
         beam_mesh.updateMatrix();
         beams.push(beam_mesh);
     }
@@ -133,15 +127,24 @@ Pallet.prototype.__build_back_beams = function () {
 Pallet.prototype.__build_front_beams = function () {
     var beams = [];
     for(var k = 0; k < this.height/(1.5*this.beam_width); k++) {
-        var beam_geometry = new THREE.BoxGeometry(this.width, this.beam_width, this.beam_thickness);
-        var beam_mesh = new THREE.Mesh(beam_geometry, this.material);
-
+        var beam_mesh = this.__build_cross_beam();
         beam_mesh.position.set(0, (k*(1.5*this.beam_width)) - this.height/2 + this.beam_width/2, this.beam_thickness);
-
         beam_mesh.updateMatrix();
         beams.push(beam_mesh);
     }
     return beams;
+};
+Pallet.prototype.__build_support_beam = function () {
+    return new THREE.Mesh(
+        new THREE.BoxGeometry(this.beam_width, this.height, this.beam_thickness*2),
+        this.material
+    );
+};
+Pallet.prototype.__build_cross_beam = function () {
+    return new THREE.Mesh(
+        new THREE.BoxGeometry(this.width, this.beam_width, this.beam_thickness),
+        this.material
+    )
 };
 
 
