@@ -71,7 +71,7 @@ Scene.prototype.build = function (callback) {
                         instance.graphics['debris'].push(debris[i]);
                         debris[i].add_to_scene(instance.scene);
                         debris[i].add_to_world(instance.world);
-                      //  debris[i].body.applyImpulse(new CANNON.Vec3(10, 0, 0), debris[i].body.position);
+                        debris[i].body.applyImpulse(new CANNON.Vec3(10, 0, 0), debris[i].body.position);
                     }
                 }
             });

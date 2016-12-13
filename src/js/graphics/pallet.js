@@ -56,21 +56,47 @@ Pallet.prototype.destroy = function () {
         support_beams[a].rotateY(degrees_to_radians(90));
         support_beams[a].translateX(a*this.width/2 - this.width/2);
     }
-    for(var b = 0; b < back_beams.length; b++) {
-        back_beams[b].position.set(
+    for(var b = 0; b < back_beams.length; b+=2) {
+        var back_beam_half_one = back_beams[b];
+        var back_beam_half_two = back_beams[b+1];
+
+        back_beam_half_one.position.set(
             this.get_position().x + this.beam_thickness,
-            this.get_position().y + b*(this.beam_width/2 - this.height/2) - (this.beam_width/2 - this.height/2),
-            this.get_position().z
+            this.get_position().y + (b/2)*(this.beam_width/2 - this.height/2) - (this.beam_width/2 - this.height/2),
+            this.get_position().z - this.width/4
         );
-        back_beams[b].rotateY(degrees_to_radians(90));
+        back_beam_half_two.position.set(
+            this.get_position().x + this.beam_thickness,
+            this.get_position().y + (b/2)*(this.beam_width/2 - this.height/2) - (this.beam_width/2 - this.height/2),
+            this.get_position().z + this.width/4
+        );
+
+        back_beam_half_one.rotateY(degrees_to_radians(90));
+        back_beam_half_two.rotateY(degrees_to_radians(90));
+
+        back_beams[b] = back_beam_half_one;
+        back_beams[b+1] = back_beam_half_two;
     }
-    for(var c = 0; c < front_beams.length; c++) {
-        front_beams[c].position.set(
+    for(var c = 0; c < front_beams.length; c+=2) {
+        var front_beam_half_one = front_beams[c];
+        var front_beam_half_two = front_beams[c+1];
+
+        front_beam_half_one.position.set(
             this.get_position().x - this.beam_thickness,
-            this.get_position().y + c*(1.5*this.beam_width) - this.height/2 + this.beam_width/2,
-            this.get_position().z
+            this.get_position().y + (c/2)*(1.5*this.beam_width) - this.height/2 + this.beam_width/2,
+            this.get_position().z - this.width/4
         );
-        front_beams[c].rotateY(degrees_to_radians(90));
+        front_beam_half_two.position.set(
+            this.get_position().x - this.beam_thickness,
+            this.get_position().y + (c/2)*(1.5*this.beam_width) - this.height/2 + this.beam_width/2,
+            this.get_position().z + this.width/4
+        );
+
+        front_beam_half_one.rotateY(degrees_to_radians(90));
+        front_beam_half_two.rotateY(degrees_to_radians(90));
+
+        front_beams[c] = front_beam_half_one;
+        front_beams[c+1] = front_beam_half_two;
     }
     var debris = [].concat(support_beams, back_beams, front_beams);
     for(var j = 0; j < debris.length; j++) {
@@ -110,20 +136,37 @@ Pallet.prototype.__build_support_beams = function () {
 Pallet.prototype.__build_back_beams = function () {
     var beams = [];
     for(var i = -1; i <= 1; i++) {
-        var beam_mesh = this.__build_cross_beam();
-        beam_mesh.position.set(0, i*(this.beam_width/2 - this.height/2), -this.beam_thickness);
-        beam_mesh.updateMatrix();
-        beams.push(beam_mesh);
+
+        var beam_half_one_mesh = this.__build_cross_beam_half();
+        var beam_half_two_mesh = this.__build_cross_beam_half();
+
+        beam_half_one_mesh.position.set(-this.width/4, i*(this.beam_width/2 - this.height/2), -this.beam_thickness);
+        beam_half_two_mesh.position.set(this.width/4, i*(this.beam_width/2 - this.height/2), -this.beam_thickness);
+
+        beam_half_one_mesh.updateMatrix();
+        beam_half_two_mesh.updateMatrix();
+
+        beams.push(beam_half_one_mesh, beam_half_two_mesh);
     }
     return beams;
 };
 Pallet.prototype.__build_front_beams = function () {
     var beams = [];
     for(var k = 0; k < this.height/(1.5*this.beam_width); k++) {
-        var beam_mesh = this.__build_cross_beam();
-        beam_mesh.position.set(0, (k*(1.5*this.beam_width)) - this.height/2 + this.beam_width/2, this.beam_thickness);
-        beam_mesh.updateMatrix();
-        beams.push(beam_mesh);
+        var beam_half_one_mesh = this.__build_cross_beam_half();
+        var beam_half_two_mesh = this.__build_cross_beam_half();
+
+        beam_half_one_mesh.position.set(
+            -this.width/4, (k*(1.5*this.beam_width)) - this.height/2 + this.beam_width/2, this.beam_thickness
+        );
+        beam_half_two_mesh.position.set(
+            this.width/4, (k*(1.5*this.beam_width)) - this.height/2 + this.beam_width/2, this.beam_thickness
+        );
+
+        beam_half_one_mesh.updateMatrix();
+        beam_half_two_mesh.updateMatrix();
+
+        beams.push(beam_half_one_mesh, beam_half_two_mesh);
     }
     return beams;
 };
@@ -133,11 +176,11 @@ Pallet.prototype.__build_support_beam = function () {
         this.material
     );
 };
-Pallet.prototype.__build_cross_beam = function () {
+Pallet.prototype.__build_cross_beam_half = function () {
     return new THREE.Mesh(
-        new THREE.BoxGeometry(this.width, this.beam_width, this.beam_thickness),
+        new THREE.BoxGeometry(this.width/2, this.beam_width, this.beam_thickness/2),
         this.material
-    )
+    );
 };
 
 
