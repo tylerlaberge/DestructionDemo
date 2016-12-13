@@ -62,20 +62,17 @@ Scene.prototype.build = function (callback) {
             instance.scene.add(instance.point_light_three);
             instance.scene.add(instance.ambient_light);
 
-            var destroyed = false;
             instance.graphics['pallet'].body.addEventListener('collide', function (event) {
-                if (!destroyed && event.body.id == instance.graphics['cannonball'].body.id) {
+                if (event.body.id == instance.graphics['cannonball'].body.id) {
                     var debris = instance.graphics['pallet'].destroy();
                     instance.graphics['pallet'].remove_from_scene(instance.scene);
                     instance.graphics['pallet'].remove_from_world(instance.world);
-                   // instance.graphics['pallet'] = null;
                     for (var i = 0; i < debris.length; i++) {
                         instance.graphics['debris'].push(debris[i]);
                         debris[i].add_to_scene(instance.scene);
                         debris[i].add_to_world(instance.world);
                         debris[i].body.applyImpulse(new CANNON.Vec3(10, 0, 0), debris[i].body.position);
                     }
-                    destroyed = true;
                 }
             });
 
@@ -113,8 +110,14 @@ Scene.prototype.reset = function () {
     this.graphics['cannonball'].remove_from_world(this.world);
     this.graphics['pallet'].remove_from_world(this.world);
 
+    for (var i = 0; i < this.graphics['debris'].length; i++) {
+        this.graphics['debris'][i].remove_from_scene(this.scene);
+        this.graphics['debris'][i].remove_from_world(this.world);
+    }
+
     this.graphics['cannonball'] = new Cannonball(0.30, this.textures['cannon']);
     this.graphics['pallet'] = new Pallet(2, 2.90, this.textures['wood_pallet']);
+    this.graphics['debris'] = [];
 
     this.graphics['cannonball'].set_position(-7.7, 1 + this.graphics['floor'].thickness/2, 5);
     this.graphics['pallet'].set_position(1.5, 1.5 + this.graphics['floor'].thickness/2, 5);
@@ -128,6 +131,22 @@ Scene.prototype.reset = function () {
     this.graphics['pallet'].add_to_scene(this.scene);
     this.graphics['pallet'].add_to_world(this.world);
 
+    (function(instance){
+        instance.graphics['pallet'].body.addEventListener('collide', function (event) {
+            if (event.body.id == instance.graphics['cannonball'].body.id) {
+                var debris = instance.graphics['pallet'].destroy();
+                instance.graphics['pallet'].remove_from_scene(instance.scene);
+                instance.graphics['pallet'].remove_from_world(instance.world);
+                for (var i = 0; i < debris.length; i++) {
+                    instance.graphics['debris'].push(debris[i]);
+                    debris[i].add_to_scene(instance.scene);
+                    debris[i].add_to_world(instance.world);
+                    debris[i].body.applyImpulse(new CANNON.Vec3(10, 0, 0), debris[i].body.position);
+                }
+            }
+        });
+    })(this);
     this.update_physics();
 };
+
 
