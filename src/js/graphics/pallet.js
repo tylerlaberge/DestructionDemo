@@ -11,8 +11,6 @@ function Pallet(width, height, texture){
     this.mesh = null;
     this.body = null;
 
-    this.object_breaker = new THREE.ConvexObjectBreaker();
-
     this.__init();
 }
 Pallet.prototype = Object.create(Graphic.prototype);
@@ -44,8 +42,6 @@ Pallet.prototype.__build_pallet = function () {
     return pallet;
 };
 Pallet.prototype.destroy = function () {
-    var debris = [];
-
     var support_beams = this.__build_support_beams();
     var back_beams = this.__build_back_beams();
     var front_beams = this.__build_front_beams();
@@ -76,13 +72,10 @@ Pallet.prototype.destroy = function () {
         );
         front_beams[c].rotateY(degrees_to_radians(90));
     }
-    var beams = [].concat(support_beams, back_beams, front_beams);
-    for(var i = 0; i < beams.length; i++) {
-        this.object_breaker.prepareBreakableObject(beams[i], this.body.mass, new THREE.Vector3(), new THREE.Vector3(), true);
-        debris = debris.concat(this.object_breaker.subdivideByImpact(beams[i], beams[i].position, new CANNON.Vec3(-1, 0, 0), 1, 0, .001));
-    }
+    var debris = [].concat(support_beams, back_beams, front_beams);
     for(var j = 0; j < debris.length; j++) {
-        var bounding_box = new THREE.Box3().setFromObject( debris[j] );
+        debris[j].geometry.computeBoundingBox();
+        var bounding_box = debris[j].geometry.boundingBox;
 
         debris[j] = new Graphic(
             debris[j].geometry, debris[j].material, debris[j],

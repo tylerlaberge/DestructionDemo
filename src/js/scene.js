@@ -7,7 +7,13 @@ function Scene() {
     this.world.gravity.set(0, -9.82, 0);
     this.world.broadphase = new CANNON.NaiveBroadphase();
     this.textures = null;
-    this.graphics = {};
+    this.graphics = {
+        'floor': null,
+        'cannon': null,
+        'cannonball': null,
+        'pallet': null,
+        'debris': []
+    };
     this.ambient_light = new THREE.AmbientLight( 0x404040 );
     this.point_light_one = new THREE.PointLight({color: 0xffffff, intensity: 1, distance: 10});
     this.point_light_two = new THREE.PointLight({color: 0xffffff, intensity: 1, distance: 10});
@@ -56,24 +62,22 @@ Scene.prototype.build = function (callback) {
             instance.scene.add(instance.point_light_three);
             instance.scene.add(instance.ambient_light);
 
-           /* instance.object_breaker.prepareBreakableObject(
-                instance.pallet.mesh, instance.pallet.body.mass, new THREE.Vector3(), new THREE.Vector3(), true
-            );*/
-           /* var destroyed = false;
-            instance.pallet.body.addEventListener('collide', function (event) {
-                if (!destroyed && event.body.id == instance.cannonball.body.id) {
-                    var debris = instance.pallet.destroy();
-                    instance.pallet.remove_from_scene(instance.scene);
-                    instance.pallet.remove_from_world(instance.world);
+            var destroyed = false;
+            instance.graphics['pallet'].body.addEventListener('collide', function (event) {
+                if (!destroyed && event.body.id == instance.graphics['cannonball'].body.id) {
+                    var debris = instance.graphics['pallet'].destroy();
+                    instance.graphics['pallet'].remove_from_scene(instance.scene);
+                    instance.graphics['pallet'].remove_from_world(instance.world);
+                   // instance.graphics['pallet'] = null;
                     for (var i = 0; i < debris.length; i++) {
+                        instance.graphics['debris'].push(debris[i]);
                         debris[i].add_to_scene(instance.scene);
                         debris[i].add_to_world(instance.world);
-                        instance.graphics.push(debris[i]);
+                        debris[i].body.applyImpulse(new CANNON.Vec3(10, 0, 0), debris[i].body.position);
                     }
                     destroyed = true;
                 }
-
-            }); */
+            });
 
             window.addEventListener('keydown', function (event) {
                 if (event.keyCode == 32) {
@@ -89,12 +93,18 @@ Scene.prototype.update_physics = function () {
     this.world.step(1.0/60.0);
     for(var key in this.graphics) {
         if (this.graphics.hasOwnProperty(key)) {
-            this.graphics[key].update_physics();
+            if (this.graphics[key] != null){
+                if (Array.isArray(this.graphics[key])){
+                    for (var i = 0; i < this.graphics[key].length; i++) {
+                        this.graphics[key][i].update_physics();
+                    }
+                }
+                else{
+                    this.graphics[key].update_physics();
+                }
+            }
         }
     }
-    /*this.floor.update_physics();
-    this.cannonball.update_physics();
-    this.pallet.update_physics();*/
 };
 Scene.prototype.reset = function () {
     this.graphics['cannonball'].remove_from_scene(this.scene);
