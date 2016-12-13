@@ -71,7 +71,7 @@ Scene.prototype.build = function (callback) {
                         instance.graphics['debris'].push(debris[i]);
                         debris[i].add_to_scene(instance.scene);
                         debris[i].add_to_world(instance.world);
-                        debris[i].body.applyImpulse(new CANNON.Vec3(10, 0, 0), debris[i].body.position);
+                      //  debris[i].body.applyImpulse(new CANNON.Vec3(10, 0, 0), debris[i].body.position);
                     }
                 }
             });
@@ -87,7 +87,7 @@ Scene.prototype.build = function (callback) {
     })(this);
 };
 Scene.prototype.update_physics = function () {
-    this.world.step(1.0/60.0);
+    this.world.step(1.0/65.0);
     for(var key in this.graphics) {
         if (this.graphics.hasOwnProperty(key)) {
             if (this.graphics[key] != null){
