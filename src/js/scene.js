@@ -30,10 +30,10 @@ window.SCENE_MODULE = (function () {
         };
         var that = this;
         function __init_graphics() {
-            that.graphics['floor'] = new GRAPHIC_MODULE.Floor(20, 50, textures['wood_floor']);
-            that.graphics['cannon'] = new GRAPHIC_MODULE.Cannon(.31, 1.3, 15, textures['cannon']);
-            that.graphics['cannonball'] = new GRAPHIC_MODULE.Cannonball(0.30, textures['cannon']);
-            that.graphics['pallet'] = new GRAPHIC_MODULE.Pallet(2, 2.90, textures['wood_pallet']);
+            that.graphics['floor'] = new MODELS_MODULE.Floor(20, 50, textures['wood_floor']);
+            that.graphics['cannon'] = new MODELS_MODULE.Cannon(.31, 1.3, 15, textures['cannon']);
+            that.graphics['cannonball'] = new MODELS_MODULE.Cannonball(0.30, textures['cannon']);
+            that.graphics['pallet'] = new MODELS_MODULE.Pallet(2, 2.90, textures['wood_pallet']);
             that.graphics['debris'] = [];
 
             that.graphics['floor'].set_position(0, 0, 0);
@@ -135,8 +135,8 @@ window.SCENE_MODULE = (function () {
             this.graphics['debris'][i].remove_from_world(world);
         }
 
-        this.graphics['cannonball'] = new GRAPHIC_MODULE.Cannonball(0.30, textures['cannon']);
-        this.graphics['pallet'] = new GRAPHIC_MODULE.Pallet(2, 2.90, textures['wood_pallet']);
+        this.graphics['cannonball'] = new MODELS_MODULE.Cannonball(0.30, textures['cannon']);
+        this.graphics['pallet'] = new MODELS_MODULE.Pallet(2, 2.90, textures['wood_pallet']);
         this.graphics['debris'] = [];
 
         this.graphics['cannonball'].set_position(-7.7, 1 + this.graphics['floor'].thickness/2, 5);

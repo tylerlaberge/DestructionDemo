@@ -1,10 +1,10 @@
-GRAPHIC_MODULE.Cannonball = function(radius, texture){
+MODELS_MODULE.Cannonball = function(radius, texture){
     /*
-     * A Class for creating and manipulating a model which represents a Cannonball.
+     * A Class for representing and manipulating a model which represents a Cannonball.
      *
      * @param radius: The radius of this Cannonball. (Number)
      * @param texture: The texture to apply to the material of this Cannonball.
-     * @inherits: Graphic
+     * @inherits: MODELS_MODULE.Model
      */
 
     //public members
@@ -33,11 +33,11 @@ GRAPHIC_MODULE.Cannonball = function(radius, texture){
             type: CANNON.Body.DYNAMIC,
             shape: new CANNON.Sphere(that.radius)
         });
-        GRAPHIC_MODULE.Graphic.call(that, that.geometry, that.material, that.mesh, that.body);
+        MODELS_MODULE.Model.call(that, that.geometry, that.material, that.mesh, that.body);
     }
     __init();
 };
-GRAPHIC_MODULE.Cannonball.prototype = Object.create(GRAPHIC_MODULE.Graphic.prototype); //This class inherits the Graphic class
+MODELS_MODULE.Cannonball.prototype = Object.create(MODELS_MODULE.Model.prototype); //This class inherits the Model class
 
 
 

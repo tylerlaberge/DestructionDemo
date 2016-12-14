@@ -1,10 +1,10 @@
-window.GRAPHIC_MODULE = (function () {
+window.MODELS_MODULE = (function () {
     /*
      * The Module which all Models should extend.
      *
      * By default this module contains only the base Model class.
      */
-    function Graphic(geometry, material, mesh, body) {
+    function Model(geometry, material, mesh, body) {
         /*
          * A Base Class for representing and manipulating models.
          *
@@ -18,7 +18,7 @@ window.GRAPHIC_MODULE = (function () {
         this.mesh = mesh;
         this.body = body;
     }
-    Graphic.prototype.get_position = function () {
+    Model.prototype.get_position = function () {
         /*
          * Get the position of this model.
          *
@@ -26,7 +26,7 @@ window.GRAPHIC_MODULE = (function () {
          */
         return this.mesh.position;
     };
-    Graphic.prototype.get_rotation = function () {
+    Model.prototype.get_rotation = function () {
         /*
          * Get the rotation of this model.
          *
@@ -34,7 +34,7 @@ window.GRAPHIC_MODULE = (function () {
          */
         return this.mesh.rotation;
     };
-    Graphic.prototype.set_position = function (x, y, z) {
+    Model.prototype.set_position = function (x, y, z) {
         /*
          * Set the position of this model.
          *
@@ -49,7 +49,7 @@ window.GRAPHIC_MODULE = (function () {
             this.update_physics();
         }
     };
-    Graphic.prototype.set_rotation = function (x, y, z) {
+    Model.prototype.set_rotation = function (x, y, z) {
         /*
          * Set the rotation of this model.
          *
@@ -64,7 +64,7 @@ window.GRAPHIC_MODULE = (function () {
             this.update_physics();
         }
     };
-    Graphic.prototype.set_velocity = function (i, j, k) {
+    Model.prototype.set_velocity = function (i, j, k) {
         /*
          * Set the velocity of this model.
          *
@@ -74,7 +74,7 @@ window.GRAPHIC_MODULE = (function () {
          */
         this.body.velocity.set(i, j, k);
     };
-    Graphic.prototype.rotateX = function (degrees) {
+    Model.prototype.rotateX = function (degrees) {
         /*
          * Rotate this model about the x-axis.
          *
@@ -82,7 +82,7 @@ window.GRAPHIC_MODULE = (function () {
          */
         this.mesh.rotateX(degrees_to_radians(degrees));
     };
-    Graphic.prototype.rotateY = function (degrees) {
+    Model.prototype.rotateY = function (degrees) {
         /*
          * Rotate this model about the y-axis.
          *
@@ -90,7 +90,7 @@ window.GRAPHIC_MODULE = (function () {
          */
         this.mesh.rotateY(degrees_to_radians(degrees));
     };
-    Graphic.prototype.rotateZ = function (degrees) {
+    Model.prototype.rotateZ = function (degrees) {
         /*
          * Rotate this model about the z-axis.
          *
@@ -98,7 +98,7 @@ window.GRAPHIC_MODULE = (function () {
          */
         this.mesh.rotateZ(degrees_to_radians(degrees));
     };
-    Graphic.prototype.translateX = function (distance) {
+    Model.prototype.translateX = function (distance) {
         /*
          * Translate this model about the x-axis.
          *
@@ -106,7 +106,7 @@ window.GRAPHIC_MODULE = (function () {
          */
         this.mesh.translateX(distance);
     };
-    Graphic.prototype.translateY = function (distance) {
+    Model.prototype.translateY = function (distance) {
         /*
          * Translate this model about the y-axis.
          *
@@ -114,7 +114,7 @@ window.GRAPHIC_MODULE = (function () {
          */
         this.mesh.translateY(distance);
     };
-    Graphic.prototype.translateZ = function (distance) {
+    Model.prototype.translateZ = function (distance) {
         /*
          * Translate this model about the z-axis.
          *
@@ -122,7 +122,7 @@ window.GRAPHIC_MODULE = (function () {
          */
         this.mesh.translateZ(distance);
     };
-    Graphic.prototype.add_to_scene = function (scene) {
+    Model.prototype.add_to_scene = function (scene) {
         /*
          * Add this model to a scene.
          *
@@ -130,7 +130,7 @@ window.GRAPHIC_MODULE = (function () {
          */
         scene.add(this.mesh);
     };
-    Graphic.prototype.add_to_world = function (world) {
+    Model.prototype.add_to_world = function (world) {
         /*
          * Add this model to a world.
          *
@@ -140,7 +140,7 @@ window.GRAPHIC_MODULE = (function () {
             world.addBody(this.body);
         }
     };
-    Graphic.prototype.remove_from_scene = function (scene) {
+    Model.prototype.remove_from_scene = function (scene) {
         /*
          * Remove this model from a scene.
          *
@@ -148,7 +148,7 @@ window.GRAPHIC_MODULE = (function () {
          */
         scene.remove(this.mesh);
     };
-    Graphic.prototype.remove_from_world = function (world) {
+    Model.prototype.remove_from_world = function (world) {
         /*
          * Remove this model from a world.
          *
@@ -158,7 +158,7 @@ window.GRAPHIC_MODULE = (function () {
             world.removeBody(this.body);
         }
     };
-    Graphic.prototype.update_physics = function () {
+    Model.prototype.update_physics = function () {
         /*
          * Update this models position and rotation according to its physics body.
          */
@@ -167,7 +167,7 @@ window.GRAPHIC_MODULE = (function () {
             this.mesh.quaternion.copy(this.body.quaternion);
         }
     };
-    Graphic.prototype.update_body = function () {
+    Model.prototype.update_body = function () {
         /*
          * Update this models physics body according to its position and rotation.
          */
@@ -177,7 +177,7 @@ window.GRAPHIC_MODULE = (function () {
         }
     };
     return {
-        Graphic: Graphic
+        Model: Model
     }
 })();
 

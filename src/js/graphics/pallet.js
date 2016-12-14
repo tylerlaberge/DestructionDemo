@@ -1,11 +1,11 @@
-GRAPHIC_MODULE.Pallet = function(width, height, texture){
+MODELS_MODULE.Pallet = function(width, height, texture){
     /*
-     * A Class for creating and manipulating a model which represents a Pallet.
+     * A Class for representing and manipulating a model which represents a Pallet.
      *
      * @param width: The width of this Pallet. (Number)
      * @param height: The height of this Pallet. (Number)
      * @param texture: The texture to apply to the material of this Pallet.
-     * @inherits: Graphic
+     * @inherits: MODELS_MODULE.Model
      */
 
     //public members
@@ -38,8 +38,7 @@ GRAPHIC_MODULE.Pallet = function(width, height, texture){
             type: CANNON.Body.DYNAMIC,
             shape: new CANNON.Box(new CANNON.Vec3(that.width/2, that.height/2, that.beam_thickness*2))
         });
-
-        GRAPHIC_MODULE.Graphic.call(that, that.geometry, that.material, that.mesh, that.body);
+        MODELS_MODULE.Model.call(that, that.geometry, that.material, that.mesh, that.body);
     }
     //private method
     function __build_pallet() {
@@ -227,7 +226,7 @@ GRAPHIC_MODULE.Pallet = function(width, height, texture){
             debris[j].geometry.computeBoundingBox();
             var bounding_box = debris[j].geometry.boundingBox;
 
-            debris[j] = new GRAPHIC_MODULE.Graphic(
+            debris[j] = new MODELS_MODULE.Model(
                 debris[j].geometry, debris[j].material, debris[j],
                 new CANNON.Body(
                     {
@@ -248,7 +247,7 @@ GRAPHIC_MODULE.Pallet = function(width, height, texture){
     };
     __init();
 };
-GRAPHIC_MODULE.Pallet.prototype = Object.create(GRAPHIC_MODULE.Graphic.prototype); //This class inherits the Graphic class.
+MODELS_MODULE.Pallet.prototype = Object.create(MODELS_MODULE.Model.prototype); //This class inherits the Model class.
 
 
 

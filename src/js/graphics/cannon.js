@@ -1,12 +1,12 @@
-GRAPHIC_MODULE.Cannon = function (barrel_radius, barrel_length, barrel_rotation, texture) {
+MODELS_MODULE.Cannon = function (barrel_radius, barrel_length, barrel_rotation, texture) {
     /*
-     * A Class for creating and manipulating a model which represents a Cannon.
+     * A Class for representing and manipulating a model which represents a Cannon.
      *
      * @param barrel_radius: The radius of this Cannon's barrel (Number)
      * @param barrel_length: The length of this Cannon's barrel (Number)
      * @param barrel_rotation: The x-axis rotation of this Cannon's barrel in radians (Number)
      * @param texture: The texture to apply to the material of this Cannon
-     * @inherits: Graphic
+     * @inherits: MODELS_MODULE.Model
      */
 
     //public members
@@ -31,7 +31,7 @@ GRAPHIC_MODULE.Cannon = function (barrel_radius, barrel_length, barrel_rotation,
         that.material = new THREE.MeshPhongMaterial({map: that.texture, side: THREE.DoubleSide});
         that.mesh = new THREE.Mesh(that.geometry, that.material);
 
-        GRAPHIC_MODULE.Graphic.call(that, that.geometry, that.material, that.mesh);
+        MODELS_MODULE.Model.call(that, that.geometry, that.material, that.mesh);
     }
     //private method
     function __build_cannon() {
@@ -125,4 +125,4 @@ GRAPHIC_MODULE.Cannon = function (barrel_radius, barrel_length, barrel_rotation,
     }
     __init();
 };
-GRAPHIC_MODULE.Cannon.prototype = Object.create(GRAPHIC_MODULE.Graphic.prototype); //This class inherits the Graphic class
+MODELS_MODULE.Cannon.prototype = Object.create(MODELS_MODULE.Model.prototype); //This class inherits the Model class

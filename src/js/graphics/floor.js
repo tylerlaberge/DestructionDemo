@@ -1,11 +1,11 @@
-GRAPHIC_MODULE.Floor = function(length, width, texture) {
+MODELS_MODULE.Floor = function(length, width, texture) {
     /*
-     * A Class for creating and manipulating a model which represents a Floor.
+     * A Class for representing and manipulating a model which represents a Floor.
      *
      * @param length: The length of this Floor. (Number)
      * @param width: The width of this Floor. (Number)
      * @param texture: The texture to apply to the material of this Floor.
-     * @inherits: Graphic
+     * @inherits: MODELS_MODULE.Model
      */
 
     //public members
@@ -40,8 +40,8 @@ GRAPHIC_MODULE.Floor = function(length, width, texture) {
             type: CANNON.Body.STATIC,
             shape: new CANNON.Box(new CANNON.Vec3(that.width/2, that.length/2, that.thickness/2))
         });
-        GRAPHIC_MODULE.Graphic.call(that, that.geometry, that.material, that.mesh, that.body);
+        MODELS_MODULE.Model.call(that, that.geometry, that.material, that.mesh, that.body);
     }
     __init();
 };
-GRAPHIC_MODULE.Floor.prototype = Object.create(GRAPHIC_MODULE.Graphic.prototype); //This class inherits the Graphic class
+MODELS_MODULE.Floor.prototype = Object.create(MODELS_MODULE.Model.prototype); //This class inherits the Model class
