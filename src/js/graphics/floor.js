@@ -1,34 +1,47 @@
-GRAPHIC_MODULE.Floor = (function () {
-    function Floor(length, width, texture) {
-        this.length = length;
-        this.width = width;
-        this.thickness = .5;
-        this.texture = texture;
+GRAPHIC_MODULE.Floor = function(length, width, texture) {
+    /*
+     * A Class for creating and manipulating a model which represents a Floor.
+     *
+     * @param length: The length of this Floor. (Number)
+     * @param width: The width of this Floor. (Number)
+     * @param texture: The texture to apply to the material of this Floor.
+     * @inherits: Graphic
+     */
 
-        this.geometry = null;
-        this.material = null;
-        this.mesh = null;
-        this.body = null;
+    //public members
+    this.length = length;
+    this.width = width;
+    this.thickness = .5;
+    this.texture = texture;
 
-        var that = this;
-        function __init() {
-            that.texture.wrapS = THREE.RepeatWrapping;
-            that.texture.wrapT = THREE.RepeatWrapping;
-            that.texture.repeat.set(10, 10);
+    this.geometry = null;
+    this.material = null;
+    this.mesh = null;
+    this.body = null;
 
-            that.geometry = new THREE.BoxGeometry(that.width, that.length, that.thickness);
-            that.material = new THREE.MeshPhongMaterial({map: that.texture, side: THREE.DoubleSide});
-            that.mesh = new THREE.Mesh(that.geometry, that.material);
-            that.mesh.rotateX(degrees_to_radians(-90));
+    //private instance member
+    var that = this;
 
-            that.body = new CANNON.Body({
-                type: CANNON.Body.STATIC,
-                shape: new CANNON.Box(new CANNON.Vec3(that.width/2, that.length/2, that.thickness/2))
-            });
-            GRAPHIC_MODULE.Graphic.call(that, that.geometry, that.material, that.mesh, that.body);
-        }
-        __init();
+    //private method
+    function __init() {
+        /*
+         * Initialize the geometry, material, mesh, and body of this Floor.
+         */
+        that.texture.wrapS = THREE.RepeatWrapping;
+        that.texture.wrapT = THREE.RepeatWrapping;
+        that.texture.repeat.set(10, 10);
+
+        that.geometry = new THREE.BoxGeometry(that.width, that.length, that.thickness);
+        that.material = new THREE.MeshPhongMaterial({map: that.texture, side: THREE.DoubleSide});
+        that.mesh = new THREE.Mesh(that.geometry, that.material);
+        that.mesh.rotateX(degrees_to_radians(-90));
+
+        that.body = new CANNON.Body({
+            type: CANNON.Body.STATIC,
+            shape: new CANNON.Box(new CANNON.Vec3(that.width/2, that.length/2, that.thickness/2))
+        });
+        GRAPHIC_MODULE.Graphic.call(that, that.geometry, that.material, that.mesh, that.body);
     }
-    Floor.prototype = Object.create(GRAPHIC_MODULE.Graphic.prototype);
-    return Floor;
-})();
+    __init();
+};
+GRAPHIC_MODULE.Floor.prototype = Object.create(GRAPHIC_MODULE.Graphic.prototype); //This class inherits the Graphic class
