@@ -27,10 +27,11 @@ window.onload = function () {
                 renderer.render(scene, camera);
 
                 document.getElementById("loading_screen").style.display = "none";
-                document.getElementById("source_button").style.display = "block";
+                document.getElementById("source_button").style.visibility = "visible";
+                document.getElementById("instructions").style.visibility = "visible";
 
                 var reset_button = document.getElementById("reset_button");
-                reset_button.style.display = 'block';
+                reset_button.style.visibility = 'visible';
                 reset_button.onclick = function () {
                     scene.reset();
                 };

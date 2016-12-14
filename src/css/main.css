@@ -26,7 +26,7 @@ a {
     opacity: .3;
 }
 #reset_button {
-    display: none;
+    visibility: hidden;
     position: absolute;
     left: 205px;
     top: 0;
@@ -34,12 +34,22 @@ a {
     height: 50px;
 }
 #source_button {
-    display: none;
+    visibility: hidden;
     position: absolute;
     left: 0;
     top: 0;
     width: 200px;
     height: 50px;
+}
+#instructions {
+    visibility: hidden;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    color: #C0C0D4;
+    font-size: 50px;
+    opacity: .3;
 }
 .ui_button {
     background-color: #48477E;
