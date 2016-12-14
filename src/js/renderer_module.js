@@ -34,7 +34,7 @@ window.RENDERER_MODULE = (function () {
         this.renderer.render(this.scene.get_scene(), this.camera.camera);
     };
     return {
-        WebGLRender: WebGLRenderer
+        WebGLRenderer: WebGLRenderer
     }
 })();
 

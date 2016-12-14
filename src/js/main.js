@@ -5,7 +5,7 @@ window.onload = function () {
 
         var scene = new SCENE_MODULE.MainScene();
         var camera = new CAMERA_MODULE.PerspectiveCamera(WIDTH, HEIGHT);
-        var renderer = new RENDERER_MODULE.WebGLRender(WIDTH, HEIGHT, scene, camera);
+        var renderer = new RENDERER_MODULE.WebGLRenderer(WIDTH, HEIGHT, scene, camera);
 
         function run() {
             scene.build(function () {
