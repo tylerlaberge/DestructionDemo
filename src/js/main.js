@@ -1,5 +1,8 @@
 window.onload = function () {
     window.APP = (function () {
+        /*
+         * The main module of this application.
+         */
         var WIDTH = document.body.clientWidth;
         var HEIGHT = document.body.clientHeight;
 
@@ -8,7 +11,13 @@ window.onload = function () {
         var renderer = new RENDERER_MODULE.WebGLRenderer(WIDTH, HEIGHT, scene, camera);
 
         function run() {
+            /*
+             * Run the application.
+             */
             scene.build(function () {
+                /*
+                 * When the scene is finished building, position the camera and render the scene.
+                 */
                 var floor_position = scene.models['floor'].get_position();
                 var pallet_position = scene.models['pallet'].get_position();
 
@@ -31,5 +40,5 @@ window.onload = function () {
             run: run
         };
     })();
-    APP.run();
+    APP.run(); //Main entry point
 };
