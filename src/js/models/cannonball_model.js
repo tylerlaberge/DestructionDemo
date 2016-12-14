@@ -29,7 +29,7 @@ MODELS_MODULE.Cannonball = function(radius, texture){
         that.mesh = new THREE.Mesh(that.geometry, that.material);
 
         that.body = new CANNON.Body({
-            mass: 15,
+            mass: 30,
             type: CANNON.Body.DYNAMIC,
             shape: new CANNON.Sphere(that.radius)
         });

@@ -48,7 +48,7 @@ window.SCENE_MODULE = (function () {
             /*
              * Create and position the models of this Scene.
              */
-            that.models['floor'] = new MODELS_MODULE.Floor(20, 50, textures['wood_floor']);
+            that.models['floor'] = new MODELS_MODULE.Floor(20, 100, textures['wood_floor']);
             that.models['cannon'] = new MODELS_MODULE.Cannon(.31, 1.3, 15, textures['cannon']);
             that.models['cannonball'] = new MODELS_MODULE.Cannonball(0.30, textures['cannon']);
             that.models['pallet'] = new MODELS_MODULE.Pallet(2, 2.90, textures['wood_pallet']);
@@ -63,7 +63,7 @@ window.SCENE_MODULE = (function () {
             that.models['pallet'].set_rotation(0, -90, 0);
 
             that.models['cannonball'].set_velocity(
-                100 * Math.cos(degrees_to_radians(90 - 15)), 3 * Math.sin(degrees_to_radians(90 - 15)), 0
+                200 * Math.cos(degrees_to_radians(90 - 15)), 3 * Math.sin(degrees_to_radians(90 - 15)), 0
             );
         }
 
@@ -79,7 +79,7 @@ window.SCENE_MODULE = (function () {
 
             that.lights['point_light_one'].position.set(-9, 2, 5);
             that.lights['point_light_two'].position.set(1.5, 2, 5);
-            that.lights['point_light_three'].position.set(12, 2, 5);
+            that.lights['point_light_three'].position.set(30, 2, 5);
         }
 
         //privileged method
@@ -121,7 +121,7 @@ window.SCENE_MODULE = (function () {
                                 instance.models['debris'].push(debris[i]);
                                 debris[i].add_to_scene(scene);
                                 debris[i].add_to_world(world);
-                                debris[i].body.applyImpulse(new CANNON.Vec3(10, 0, 0), debris[i].body.position);
+                                debris[i].body.applyImpulse(new CANNON.Vec3(30, 0, 0), debris[i].body.position);
                             }
                         }
                     });
@@ -146,7 +146,7 @@ window.SCENE_MODULE = (function () {
          *
          * Should be called in the render loop.
          */
-        world.step(1.0/65.0);
+        world.step(1.0/70.0);
         for(var key in this.models) {
             if (this.models.hasOwnProperty(key)) {
                 if (this.models[key] != null){
@@ -187,7 +187,7 @@ window.SCENE_MODULE = (function () {
         this.models['pallet'].set_rotation(0, -90, 0);
 
         this.models['cannonball'].set_velocity(
-            100*Math.cos(degrees_to_radians(90 - 15)), 3*Math.sin(degrees_to_radians(90 - 15)), 0
+            200*Math.cos(degrees_to_radians(90 - 15)), 3*Math.sin(degrees_to_radians(90 - 15)), 0
         );
 
         this.models['pallet'].add_to_scene(scene);
@@ -203,7 +203,7 @@ window.SCENE_MODULE = (function () {
                         instance.models['debris'].push(debris[i]);
                         debris[i].add_to_scene(scene);
                         debris[i].add_to_world(world);
-                        debris[i].body.applyImpulse(new CANNON.Vec3(10, 0, 0), debris[i].body.position);
+                        debris[i].body.applyImpulse(new CANNON.Vec3(30, 0, 0), debris[i].body.position);
                     }
                 }
             });
