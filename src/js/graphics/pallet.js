@@ -133,11 +133,10 @@ Pallet.prototype.__get_support_beam_debris = function () {
     var debris = this.__build_support_beams();
     for(var i = 0; i < debris.length; i++) {
         debris[i].position.set(
-            this.get_position().x + i*this.width/2 - this.width/2,
+            this.get_position().x,
             this.get_position().y,
             this.get_position().z
         );
-        debris[i].translateX(-(i*this.width/2 - this.width/2));
         debris[i].rotation.set(this.get_rotation().x, this.get_rotation().y, this.get_rotation().z);
         debris[i].translateX(i*this.width/2 - this.width/2);
     }
@@ -147,22 +146,15 @@ Pallet.prototype.__get_back_beam_debris = function () {
     var debris = this.__build_back_beams();
     for(var i = 0; i < debris.length; i+=2) {
         debris[i].position.set(
-            this.get_position().x - this.beam_width*2,
-            this.get_position().y + (i/2)*(this.beam_width/2 - this.height/2) - (this.beam_width/2 - this.height/2),
-            this.get_position().z - this.beam_thickness*2
+            this.get_position().x,
+            this.get_position().y,
+            this.get_position().z
         );
         debris[i+1].position.set(
-            this.get_position().x + this.beam_width*2,
-            this.get_position().y + (i/2)*(this.beam_width/2 - this.height/2) - (this.beam_width/2 - this.height/2),
-            this.get_position().z - this.beam_thickness*2
+            this.get_position().x,
+            this.get_position().y,
+            this.get_position().z
         );
-        debris[i].translateX(this.beam_width*2);
-        debris[i].translateY(-((i/2)*(this.beam_width/2 - this.height/2) - (this.beam_width/2 - this.height/2)));
-        debris[i].translateZ(this.beam_thickness*2);
-        debris[i+1].translateX(-this.beam_width*2);
-        debris[i+1].translateY(-((i/2)*(this.beam_width/2 - this.height/2) - (this.beam_width/2 - this.height/2)));
-        debris[i+1].translateZ(this.beam_thickness*2);
-
         debris[i].rotation.set(this.get_rotation().x, this.get_rotation().y, this.get_rotation().z);
         debris[i+1].rotation.set(this.get_rotation().x, this.get_rotation().y, this.get_rotation().z);
 
@@ -179,22 +171,15 @@ Pallet.prototype.__get_front_beam_debris = function () {
     var debris = this.__build_front_beams();
     for(var i = 0; i < debris.length; i+=2) {
         debris[i].position.set(
-            this.get_position().x - this.beam_width*2,
-            this.get_position().y + (i/2)*(1.5*this.beam_width) - this.height/2 + this.beam_width/2,
-            this.get_position().z + this.beam_thickness*2
+            this.get_position().x,
+            this.get_position().y,
+            this.get_position().z
         );
         debris[i+1].position.set(
-            this.get_position().x + this.beam_width*2,
-            this.get_position().y + (i/2)*(1.5*this.beam_width) - this.height/2 + this.beam_width/2,
-            this.get_position().z + this.beam_thickness*2
+            this.get_position().x,
+            this.get_position().y,
+            this.get_position().z
         );
-        debris[i].translateX(this.beam_width*2);
-        debris[i].translateY(-((i/2)*(1.5*this.beam_width) - this.height/2 + this.beam_width/2));
-        debris[i].translateZ(-this.beam_thickness*2);
-        debris[i+1].translateX(-this.beam_width*2);
-        debris[i+1].translateY(-((i/2)*(1.5*this.beam_width) - this.height/2 + this.beam_width/2));
-        debris[i+1].translateZ(-this.beam_thickness*2);
-
         debris[i].rotation.set(this.get_rotation().x, this.get_rotation().y, this.get_rotation().z);
         debris[i+1].rotation.set(this.get_rotation().x, this.get_rotation().y, this.get_rotation().z);
 
