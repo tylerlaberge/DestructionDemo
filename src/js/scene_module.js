@@ -1,4 +1,9 @@
 window.SCENE_MODULE = (function () {
+    /*
+     * A module containing scenes to be used by the App.
+     */
+
+    //private module members
     var scene = new THREE.Scene();
 
     var world = new CANNON.World();
@@ -7,6 +12,7 @@ window.SCENE_MODULE = (function () {
 
     var textures = null;
 
+    //private module method
     function load_textures(callback) {
         window.load_textures(function (textures_map) {
             textures = textures_map;
@@ -14,6 +20,11 @@ window.SCENE_MODULE = (function () {
         });
     }
     function MainScene() {
+        /*
+         * A Class responsible for creating and maintaining the models of the main scene.
+         */
+
+        //public members
         this.graphics = {
             'floor': null,
             'cannon': null,
@@ -28,8 +39,15 @@ window.SCENE_MODULE = (function () {
             'point_light_three': null
 
         };
+
+        //private instance member
         var that = this;
-        function __init_graphics() {
+
+        //private method
+        function __init_models() {
+            /*
+             * Create and position the models of this Scene.
+             */
             that.graphics['floor'] = new MODELS_MODULE.Floor(20, 50, textures['wood_floor']);
             that.graphics['cannon'] = new MODELS_MODULE.Cannon(.31, 1.3, 15, textures['cannon']);
             that.graphics['cannonball'] = new MODELS_MODULE.Cannonball(0.30, textures['cannon']);
@@ -48,7 +66,12 @@ window.SCENE_MODULE = (function () {
                 100 * Math.cos(degrees_to_radians(90 - 15)), 3 * Math.sin(degrees_to_radians(90 - 15)), 0
             );
         }
+
+        //private method
         function __init_lights() {
+            /*
+             * Create and position the lights of this Scene.
+             */
             that.lights['ambient_light'] = new THREE.AmbientLight(0x404040);
             that.lights['point_light_one'] = new THREE.PointLight({color: 0xffffff, intensity: 1, distance: 10});
             that.lights['point_light_two'] = new THREE.PointLight({color: 0xffffff, intensity: 1, distance: 10});
@@ -58,15 +81,19 @@ window.SCENE_MODULE = (function () {
             that.lights['point_light_two'].position.set(1.5, 2, 5);
             that.lights['point_light_three'].position.set(12, 2, 5);
         }
+
+        //privileged method
         this.build = function (callback) {
             /*
-             * Builds the scene.
+             * Build the scene.
+             *
+             * Creates all models and lights in the MainScene and adds them to the modules scene.
              *
              * @param callback: A function to call when the scene is finished building.
              */
             (function (instance) {
                 load_textures(function () {
-                    __init_graphics();
+                    __init_models();
                     __init_lights();
 
                     instance.graphics['floor'].add_to_scene(scene);
@@ -82,6 +109,9 @@ window.SCENE_MODULE = (function () {
                     scene.add(instance.lights['ambient_light']);
 
                     instance.graphics['pallet'].body.addEventListener('collide', function (event) {
+                        /*
+                         * On pallet collision with the cannonball, replace the pallet with debris from the destroyed pallet.
+                         */
                         if (event.body.id == instance.graphics['cannonball'].body.id) {
                             var debris = instance.graphics['pallet'].destroy();
                             instance.graphics['pallet'].remove_from_scene(scene);
@@ -96,6 +126,9 @@ window.SCENE_MODULE = (function () {
                     });
 
                     window.addEventListener('keydown', function (event) {
+                        /*
+                         * On spacebar press, fire the cannonball.
+                         */
                         if (event.keyCode == 32) {
                             instance.graphics['cannonball'].add_to_scene(scene);
                             instance.graphics['cannonball'].add_to_world(world);
@@ -107,6 +140,11 @@ window.SCENE_MODULE = (function () {
         };
     }
     MainScene.prototype.update_physics = function(){
+        /*
+         * Update the physics of every model in the scene.
+         *
+         * Should be called in the render loop.
+         */
         world.step(1.0/65.0);
         for(var key in this.graphics) {
             if (this.graphics.hasOwnProperty(key)) {
@@ -124,6 +162,9 @@ window.SCENE_MODULE = (function () {
         }
     };
     MainScene.prototype.reset = function () {
+        /*
+         * Reset the scene.
+         */
         this.graphics['cannonball'].remove_from_scene(scene);
         this.graphics['pallet'].remove_from_scene(scene);
 
@@ -169,12 +210,14 @@ window.SCENE_MODULE = (function () {
         this.update_physics();
     };
     MainScene.prototype.get_scene = function () {
+        /*
+         * Get the module level scene that this MainScene uses.
+         *
+         * @return: The scene that this MainScene uses. (THREE.Scene)
+         */
         return scene;
     };
     return {
         MainScene: MainScene
     }
 })();
-
-
-
