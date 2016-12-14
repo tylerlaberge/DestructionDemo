@@ -37,6 +37,8 @@ MODELS_MODULE.Cannon = function (barrel_radius, barrel_length, barrel_rotation, 
     function __build_cannon() {
         /*
          * Build the cannon shaped geometry.
+         *
+         * @return: The cannon shaped geometry. (THREE.Geometry)
          */
         var cannon = new THREE.Geometry();
 
@@ -55,6 +57,8 @@ MODELS_MODULE.Cannon = function (barrel_radius, barrel_length, barrel_rotation, 
     function __build_base() {
         /*
          * Build the base of the cannon shaped geometry.
+         *
+         * @return: The mesh which represents the base of this cannon. (THREE.Mesh)
          */
         var base_geometry = new THREE.Geometry();
 
@@ -84,6 +88,8 @@ MODELS_MODULE.Cannon = function (barrel_radius, barrel_length, barrel_rotation, 
     function __build_barrel() {
         /*
          * Build the barrel of the cannon shaped geometry.
+         *
+         * @return: The mesh which represents the barrel of this cannon. (THREE.Mesh)
          */
         var barrel_geometry = new THREE.Geometry();
 

@@ -44,6 +44,8 @@ MODELS_MODULE.Pallet = function(width, height, texture){
     function __build_pallet() {
         /*
          * Build the pallet shaped geometry.
+         *
+         * @return: The pallet shaped geometry. (THREE.Geometry)
          */
         var pallet = new THREE.Geometry();
 
@@ -62,6 +64,8 @@ MODELS_MODULE.Pallet = function(width, height, texture){
     function __build_support_beams() {
         /*
          * Build the support beams of the pallet shaped geometry.
+         *
+         * @return: An array of mesh's which represent the support beams of this Pallet. ([THREE.Mesh, ...])
          */
         var beams = [];
         for(var i = -1; i <= 1; i++) {
@@ -76,6 +80,11 @@ MODELS_MODULE.Pallet = function(width, height, texture){
     function __build_back_beams() {
         /*
          * Build the back beams of the pallet shaped geometry.
+         *
+         * Each back beam is made up of two halves in order to make destruction easier, because of this
+         * the return value is in the form [beam_one_half_one, beam_one_half_two, beam_two_half_one, beam_two_half_two, ...]
+         *
+         * @return: An array of mesh's which represent the back beams of this Pallet. ([THREE.Mesh, ...])
          */
         var beams = [];
         for(var i = -1; i <= 1; i++) {
@@ -97,6 +106,11 @@ MODELS_MODULE.Pallet = function(width, height, texture){
     function __build_front_beams() {
         /*
          * Build the front beams of the pallet shaped geometry.
+         *
+         * Each front beam is made up of two halves in order to make destruction easier, because of this
+         * the return value is in the form [beam_one_half_one, beam_one_half_two, beam_two_half_one, beam_two_half_two, ...]
+         *
+         * @return: An array of mesh's which represent the front beams of this Pallet. ([THREE.Mesh, ...])
          */
         var beams = [];
         for(var k = 0; k < that.height/(1.5*that.beam_width); k++) {
@@ -121,6 +135,8 @@ MODELS_MODULE.Pallet = function(width, height, texture){
     function __build_support_beam() {
         /*
          * Build the mesh for a single support beam.
+         *
+         * @return: The mesh which represents a single support beam. (THREE.Mesh)
          */
         return new THREE.Mesh(
             new THREE.BoxGeometry(that.beam_width, that.height, that.beam_thickness*2),
@@ -131,6 +147,8 @@ MODELS_MODULE.Pallet = function(width, height, texture){
     function __build_cross_beam_half() {
         /*
          * Build the mesh for half of a cross beam.
+         *
+         * @return: A Mesh which represents half of a cross beam. (THREE.Mesh)
          */
         return new THREE.Mesh(
             new THREE.BoxGeometry(that.width/2, that.beam_width, that.beam_thickness/2),
@@ -141,6 +159,8 @@ MODELS_MODULE.Pallet = function(width, height, texture){
     function __get_support_beam_debris() {
         /*
          * Get debris which represent the destroyed support beams of this Pallet.
+         *
+         * @return: An array of meshes which represent the debris the support beams. ([THREE.Mesh, THREE.Mesh, ...])
          */
         var debris = __build_support_beams();
         for(var i = 0; i < debris.length; i++) {
@@ -158,6 +178,8 @@ MODELS_MODULE.Pallet = function(width, height, texture){
     function __get_back_beam_debris() {
         /*
          * Get debris which represent the destroyed back beams of this Pallet.
+         *
+         * @return: An array of meshes which represent the debris the back beams. ([THREE.Mesh, THREE.Mesh, ...])
          */
         var debris = __build_back_beams();
         for(var i = 0; i < debris.length; i+=2) {
@@ -187,6 +209,8 @@ MODELS_MODULE.Pallet = function(width, height, texture){
     function __get_front_beam_debris() {
         /*
          * Get debris which represent the destroyed front beams of this Pallet.
+         *
+         * @return: An array of meshes which represent the debris the front beams. ([THREE.Mesh, THREE.Mesh, ...])
          */
         var debris = __build_front_beams();
         for(var i = 0; i < debris.length; i+=2) {
@@ -216,6 +240,10 @@ MODELS_MODULE.Pallet = function(width, height, texture){
     this.destroy = function () {
         /*
          * Get debris which represent the destroyed pieces of this Pallet.
+         *
+         * Each debris is given a body which can be used to simulate physics.
+         *
+         * @return: An array of Models which represent the destroyed pieces of this Pallet. ([MODELS_MODULE.Model, MODELS_MODULE.Model, ...])
          */
         var support_beam_debris = __get_support_beam_debris();
         var back_beam_debris = __get_back_beam_debris();
