@@ -93,6 +93,7 @@ window.SCENE_MODULE = (function () {
              */
             (function (instance) {
                 load_textures(function () {
+                    //When the textures are finished loading, continue building.
                     __init_models();
                     __init_lights();
 

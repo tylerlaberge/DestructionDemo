@@ -164,6 +164,9 @@ MODELS_MODULE.Pallet = function(width, height, texture){
          */
         var debris = __build_support_beams();
         for(var i = 0; i < debris.length; i++) {
+            /*
+             * This loop essentially just positions all the beams to line up with this Pallets current position
+             */
             debris[i].position.set(
                 that.get_position().x,
                 that.get_position().y,
@@ -183,6 +186,9 @@ MODELS_MODULE.Pallet = function(width, height, texture){
          */
         var debris = __build_back_beams();
         for(var i = 0; i < debris.length; i+=2) {
+            /*
+             * This loop essentially just positions all the beams to line up with this Pallets current position
+             */
             debris[i].position.set(
                 that.get_position().x,
                 that.get_position().y,
@@ -214,6 +220,9 @@ MODELS_MODULE.Pallet = function(width, height, texture){
          */
         var debris = __build_front_beams();
         for(var i = 0; i < debris.length; i+=2) {
+            /*
+             * This loop essentially just positions all the beams to line up with this Pallets current position
+             */
             debris[i].position.set(
                 that.get_position().x,
                 that.get_position().y,
